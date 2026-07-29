@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import '../../routes/app_router.dart';
 import '../auth/token_service.dart';
 import '../auth/user_storage_service.dart';
 
@@ -27,7 +28,7 @@ class ErrorInterceptor extends Interceptor {
       await tokenService.clear();
 
       unauthenticatedStream.add(reason);
-      // TODO: route back to login page
+      appRouter.go('/login');
     }
 
     if (status == 403) {

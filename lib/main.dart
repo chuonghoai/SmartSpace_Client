@@ -1,9 +1,22 @@
 import 'package:flutter/material.dart';
-import 'cross_platform_demo/demo_app.dart';
+import 'routes/app_router.dart';
 
 void main() {
-  // Initialization logic (like Firebase, DI, SharedPreferences) 
-  // will go here in the future before runApp().
+  runApp(const SmartSpaceApp());
+}
 
-  runApp(const DemoApp());
+class SmartSpaceApp extends StatelessWidget {
+  const SmartSpaceApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      title: 'SmartSpace Client',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        useMaterial3: true,
+      ),
+      routerConfig: appRouter,
+    );
+  }
 }
