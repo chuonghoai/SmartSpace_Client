@@ -10,8 +10,10 @@ class ThemeProvider extends ChangeNotifier {
   ThemeMode get themeMode => _themeMode;
   bool get isInitialized => _isInitialized;
 
-  ThemeProvider() {
-    _loadThemeMode();
+  ThemeProvider();
+
+  Future<void> initialize() async {
+    await _loadThemeMode();
   }
 
   Future<void> _loadThemeMode() async {

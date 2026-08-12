@@ -5,11 +5,13 @@ class LocaleProvider extends ChangeNotifier {
   static const String _localeKey = 'app_locale';
   Locale _locale = const Locale('vi');
 
-  LocaleProvider() {
-    _loadLocale();
-  }
+  LocaleProvider();
 
   Locale get locale => _locale;
+
+  Future<void> initialize() async {
+    await _loadLocale();
+  }
 
   Future<void> _loadLocale() async {
     final languageCode = await sharedPreferencesService.get<String>(_localeKey);
