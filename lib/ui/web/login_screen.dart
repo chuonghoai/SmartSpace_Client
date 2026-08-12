@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:smartspace_client/l10n/app_localizations.dart';
 
 class WebLoginScreen extends StatelessWidget {
   const WebLoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: Center(
         child: ConstrainedBox(
@@ -17,8 +20,8 @@ class WebLoginScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text(
-                    'Login (Web)',
+                  Text(
+                    l10n.login,
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -26,18 +29,18 @@ class WebLoginScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),
-                  const TextField(
+                  TextField(
                     decoration: InputDecoration(
-                      labelText: 'Email',
-                      border: OutlineInputBorder(),
+                      labelText: l10n.email,
+                      border: const OutlineInputBorder(),
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const TextField(
+                  TextField(
                     obscureText: true,
                     decoration: InputDecoration(
-                      labelText: 'Password',
-                      border: OutlineInputBorder(),
+                      labelText: l10n.password,
+                      border: const OutlineInputBorder(),
                     ),
                   ),
                   const SizedBox(height: 32),
@@ -46,7 +49,7 @@ class WebLoginScreen extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                     ),
-                    child: const Text('Login'),
+                    child: Text(l10n.login),
                   ),
                 ],
               ),
