@@ -1,24 +1,22 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:smartspace_client/core/local_storage/secured_storage.dart';
 
 const String _accessTokenKey = 'access_token';
 
 class TokenService {
-  final _storage = const FlutterSecureStorage();
-
   Future<void> saveAccessToken(String token) async {
-    await _storage.write(key: _accessTokenKey, value: token);
+    await securedStorageService.set(_accessTokenKey, token);
   }
 
   Future<String?> getAccessToken() async {
-    return await _storage.read(key: _accessTokenKey);
+    return await securedStorageService.get(_accessTokenKey);
   }
 
   Future<void> removeAccessToken() async {
-    await _storage.delete(key: _accessTokenKey);
+    await securedStorageService.remove(_accessTokenKey);
   }
 
   Future<void> clear() async {
-    await _storage.deleteAll();
+    await securedStorageService.clear();
   }
 }
 
