@@ -3,7 +3,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'l10n/app_localizations.dart';
 import 'routes/app_router.dart';
 import 'core/localization/locale_provider.dart';
-
+import 'core/theme/app_theme.dart';
+import 'core/theme/theme_provider.dart';
 void main() {
   runApp(const SmartSpaceApp());
 }
@@ -14,14 +15,13 @@ class SmartSpaceApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-      listenable: localeProvider,
+      listenable: Listenable.merge([localeProvider, themeProvider]),
       builder: (context, child) {
         return MaterialApp.router(
           title: 'SmartSpace Client',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-            useMaterial3: true,
-          ),
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: themeProvider.themeMode,
           locale: localeProvider.locale,
           localizationsDelegates: const [
             AppLocalizations.delegate,

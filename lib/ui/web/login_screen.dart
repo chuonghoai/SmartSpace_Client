@@ -22,10 +22,10 @@ class WebLoginScreen extends StatelessWidget {
                 children: [
                   Text(
                     l10n.login,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),
