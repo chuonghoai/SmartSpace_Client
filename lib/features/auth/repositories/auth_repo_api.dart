@@ -19,8 +19,8 @@ class AuthRepoApi implements AuthRepo {
   }
 
   @override
-  Future<ApiResponse<void>> logout() async {
-    return await apiClient.post<void>('/auth/logout');
+  Future<ApiResponse<void>> logout() {
+    return apiClient.post<void>('/auth/logout');
   }
 
   @override
@@ -63,6 +63,7 @@ class AuthRepoApi implements AuthRepo {
         'email': email,
         'password': password,
         'confirm_password': confirmPassword,
+        'rememberMe': true,
       },
       decoder: (json) => TokenModel.fromJson(json),
     );
