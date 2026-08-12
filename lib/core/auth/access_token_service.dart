@@ -1,8 +1,8 @@
-import 'package:smartspace_client/core/local_storage/secured_storage.dart';
+import 'package:smartspace_client/core/storage/secured_storage.dart';
 
 const String _accessTokenKey = 'access_token';
 
-class TokenService {
+class AccessTokenService {
   Future<void> saveAccessToken(String token) async {
     await securedStorageService.set(_accessTokenKey, token);
   }
@@ -20,4 +20,4 @@ class TokenService {
   }
 }
 
-final tokenService = TokenService();
+final accessTokenService = AccessTokenService();

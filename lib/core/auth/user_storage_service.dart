@@ -1,4 +1,4 @@
-import '../local_storage/secured_storage.dart';
+import '../storage/secured_storage.dart';
 
 const String _userKey = 'user';
 
