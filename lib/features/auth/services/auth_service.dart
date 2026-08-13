@@ -43,8 +43,17 @@ class AuthService {
     return authRepo.logout();
   }
 
-  Future<ApiResponse<TokenModel>> refreshToken(String refreshToken) async {
-    return await authRepo.refreshToken(refreshToken);
+  Future<bool> refreshToken(String refreshToken) async {
+    try {
+      final response = await authRepo.refreshToken(refreshToken);
+      await Future.wait([
+        accessTokenService.saveAccessToken(response.data!.accessToken),
+        refreshTokenService.saveRefreshToken(response.data!.refreshToken),
+      ]);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future<ApiResponse<void>> sendOtpRegister(String email) async {

@@ -2,7 +2,8 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:smartspace_client/core/auth/refresh_token_service.dart';
-import 'package:smartspace_client/core/storage/secured_storage.dart';
+import 'package:smartspace_client/core/auth/access_token_service.dart';
+import 'package:smartspace_client/features/auth/services/auth_service.dart';
 import '../../routes/app_router.dart';
 
 class ErrorInterceptor extends Interceptor {
@@ -17,17 +18,38 @@ class ErrorInterceptor extends Interceptor {
     final status = err.response?.statusCode;
     final requestUrl = err.requestOptions.path;
 
-    if (status == 401 && !requestUrl.contains('/auth/login')) {
+    if (status == 401 &&
+        !requestUrl.contains('/auth/login') &&
+        err.requestOptions.extra['isRetry'] != true) {
       final refreshToken = await refreshTokenService.getRefreshToken();
       String reason = 'unauthorized';
+
       if (refreshToken != null) {
+        bool refreshTokenSuccess = await authService.refreshToken(refreshToken);
+
+        if (refreshTokenSuccess) {
+          try {
+            final newAccessToken = await accessTokenService.getAccessToken();
+            err.requestOptions.headers['Authorization'] =
+                'Bearer $newAccessToken';
+            err.requestOptions.extra['isRetry'] = true;
+            final dio = Dio();
+            final response = await dio.fetch(err.requestOptions);
+            return handler.resolve(response);
+          } on DioException catch (retryErr) {
+            return handler.next(retryErr);
+          } catch (e) {
+            return handler.next(err);
+          }
+        }
+
         reason = 'expired';
       }
 
-      await securedStorageService.clear();
-
+      await authService.logout();
       unauthenticatedStream.add(reason);
       appRouter.go('/login');
+      return handler.next(err);
     }
 
     if (status == 403) {
