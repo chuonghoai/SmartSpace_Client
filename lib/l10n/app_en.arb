@@ -4,6 +4,7 @@
   "login": "Login",
   "email": "Email",
   "password": "Password",
+  "rememberMe": "Remember me",
   "welcome": "Welcome",
   "settings": "Settings",
   "language": "Language",

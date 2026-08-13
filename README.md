@@ -1,3 +1,14 @@
+## 🌐 Ngôn ngữ (Localization)
+ Để thêm ngôn ngữ mới, bạn cần thực hiện các bước sau:
+ 
+ 1. Tạo file arb mới cho ngôn ngữ mới: 
+ ```bash
+ flutter gen-l10n
+ ```
+ 
+ 2. Sau khi tạo file arb mới, bạn cần chạy lại lệnh trên để cập nhật file app_localizations.dart: 
+ 
+
 ## 🌍 Cấu hình Môi trường (Environment Setup)
 
 Dự án sử dụng file `.env` để quản lý các cấu hình kết nối API khi phát triển ở môi trường local (Development). 

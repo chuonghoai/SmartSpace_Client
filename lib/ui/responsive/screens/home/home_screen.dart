@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smartspace_client/ui/mobile/home_screen.dart';
+import 'package:smartspace_client/ui/mobile/home/home_screen.dart';
 import 'package:smartspace_client/ui/responsive/responsive_layout.dart';
-import 'package:smartspace_client/ui/web/home_screen.dart';
+import 'package:smartspace_client/ui/web/home/home_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

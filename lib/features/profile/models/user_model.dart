@@ -24,4 +24,14 @@ class UserModel {
       role: ERole.fromString(json['role'] as String)!,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'email': email,
+      'fullname': fullname,
+      'avatar_url': avatarUrl,
+      'role': role.value,
+    };
+  }
 }

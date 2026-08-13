@@ -21,6 +21,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get password => 'Mật khẩu';
 
   @override
+  String get rememberMe => 'Ghi nhớ đăng nhập';
+
+  @override
   String get welcome => 'Chào mừng';
 
   @override
