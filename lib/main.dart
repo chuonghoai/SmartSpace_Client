@@ -6,9 +6,11 @@ import 'core/localization/locale_provider.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  usePathUrlStrategy();
   await dotenv.load(fileName: ".env");
   runApp(const SmartSpaceApp());
 }
