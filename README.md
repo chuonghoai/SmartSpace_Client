@@ -1,3 +1,9 @@
+# Cách dùng cơ chế go, push, pop, pushReplacement
+ - Go: Thay thế widget hiện tại và xóa widget trước đó khỏi stack
+ - Push: Push route mới lên stack, route hiện tại vẫn nằm bên dưới.
+ - Pop: Pop route hiện tại, quay lại route trước.
+ - pushReplacement: Push route mới và thay thế route hiện tại trong stack.
+
 ## 🌐 Ngôn ngữ (Localization)
  Để thêm ngôn ngữ mới, bạn cần thực hiện các bước sau:
  
