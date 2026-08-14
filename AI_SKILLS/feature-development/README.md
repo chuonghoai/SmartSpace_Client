@@ -40,3 +40,99 @@ Trước khi coi một feature là hoàn thành, Agent **PHẢI** check các ti�
 - [ ] Đã kiểm tra đầy đủ các thư viện import và quy tắc null-safety.
 - [ ] Đã chạy `flutter analyze` và đảm bảo không có cảnh báo/lỗi logic nghiêm trọng.
 - [ ] Đã chạy các bộ test liên quan (nếu project có áp dụng).
+
+---
+
+## Rule: Responsive UI Architecture
+
+Khi triển khai code trong các file `responsive`, responsive layer chỉ chịu trách nhiệm lựa chọn và render UI tương ứng (`mobile`, `web`,...). Không truyền các giá trị runtime/state/dependency từ responsive screen vào UI thông qua constructor, trừ khi task explicitly yêu cầu.
+
+Responsive screen không nên quản lý controller, TextEditingController, FocusNode, AnimationController, form state, checkbox state hoặc các UI-specific state chỉ để truyền xuống child UI.
+
+Ưu tiên kiến trúc:
+
+`Responsive → Mobile/Web UI → Controller → Service → Repository`
+
+Responsive layer phải giữ code tối giản, dễ đọc và không trở thành nơi quản lý state của UI.
+
+---
+
+## Rule: UI Dependency Ownership
+
+Các file giao diện (`mobile`, `web`, `desktop`,...) phải tự import và khởi tạo các biến/object/dependency mà chính UI đó sở hữu.
+
+Không yêu cầu responsive layer truyền dependency vào UI thông qua constructor nếu dependency đó chỉ phục vụ riêng UI.
+
+Các object có lifecycle thuộc widget, ví dụ:
+
+* `TextEditingController`
+* `ScrollController`
+* `FocusNode`
+* `AnimationController`
+* feature-specific controller
+
+phải được tạo và dispose ở widget sở hữu chúng, trừ khi kiến trúc hoặc task explicitly yêu cầu dependency injection từ bên ngoài.
+
+State chỉ phục vụ một UI cụ thể cũng phải được quản lý tại UI đó.
+
+---
+
+## Rule: UI Constructor
+
+Không sử dụng constructor của các file UI để nhận một danh sách lớn controller, state, callback hoặc object chỉ nhằm truyền dependency từ responsive layer xuống UI.
+
+UI widget phải tự tạo và quản lý dependency của nó khi phù hợp.
+
+Constructor chỉ nên chứa các parameter thực sự cần thiết từ parent hoặc được task yêu cầu truyền từ bên ngoài.
+
+Không tạo constructor dependency injection một cách máy móc.
+
+---
+
+## Rule: Model JSON
+
+Khi tạo một file `model`, phải triển khai đầy đủ hai phương thức chuyển đổi JSON:
+
+```dart
+factory Model.fromJson(Map<String, dynamic> json)
+```
+
+và
+
+```dart
+Map<String, dynamic> toJson()
+```
+
+`fromJson` dùng để chuyển JSON/API response thành model.
+
+`toJson` dùng để chuyển model thành JSON/API request hoặc payload.
+
+Không tạo model mới chỉ có properties/constructor mà bỏ qua `fromJson` hoặc `toJson`, trừ khi task explicitly yêu cầu model không serialize/deserialize JSON.
+
+Ví dụ:
+
+```dart
+class UserModel {
+  final String id;
+  final String email;
+
+  UserModel({
+    required this.id,
+    required this.email,
+  });
+
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      id: json['id'] as String,
+      email: json['email'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'email': email,
+    };
+  }
+}
+```

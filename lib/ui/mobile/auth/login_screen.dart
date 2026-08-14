@@ -3,21 +3,32 @@ import 'package:smartspace_client/features/auth/controller/login_controller.dart
 import 'package:smartspace_client/l10n/app_localizations.dart';
 import '../../../core/localization/locale_provider.dart';
 
-class MobileLoginScreen extends StatelessWidget {
-  final LoginController controller;
-  final TextEditingController emailController;
-  final TextEditingController passwordController;
-  final bool rememberMe;
-  final ValueChanged<bool?> onRememberMeChanged;
+class MobileLoginScreen extends StatefulWidget {
+  const MobileLoginScreen({super.key});
 
-  const MobileLoginScreen({
-    super.key,
-    required this.controller,
-    required this.emailController,
-    required this.passwordController,
-    required this.rememberMe,
-    required this.onRememberMeChanged,
-  });
+  @override
+  State<MobileLoginScreen> createState() => _MobileLoginScreenState();
+}
+
+class _MobileLoginScreenState extends State<MobileLoginScreen> {
+  late final LoginController _controller;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _rememberMe = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = LoginController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,68 +49,79 @@ class MobileLoginScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (controller.error != null) ...[
-              Text(
-                controller.error!,
-                style: const TextStyle(color: Colors.red),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 16),
-            ],
-            TextField(
-              controller: emailController,
-              decoration: InputDecoration(
-                labelText: l10n.email,
-                border: const OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: passwordController,
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: l10n.password,
-                border: const OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Row(
+      body: ListenableBuilder(
+        listenable: _controller,
+        builder: (context, _) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Checkbox(
-                  value: rememberMe,
-                  onChanged: controller.isLoading ? null : onRememberMeChanged,
+                if (_controller.error != null) ...[
+                  Text(
+                    _controller.error!,
+                    style: const TextStyle(color: Colors.red),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+                ],
+                TextField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    labelText: l10n.email,
+                    border: const OutlineInputBorder(),
+                  ),
                 ),
-                Text(l10n.rememberMe),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: _passwordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: l10n.password,
+                    border: const OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _rememberMe,
+                      onChanged: _controller.isLoading
+                          ? null
+                          : (value) {
+                              setState(() {
+                                _rememberMe = value ?? false;
+                              });
+                            },
+                    ),
+                    Text(l10n.rememberMe),
+                  ],
+                ),
+                const SizedBox(height: 24),
+                ElevatedButton(
+                  onPressed: _controller.isLoading
+                      ? null
+                      : () {
+                          _controller.login(
+                            context: context,
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                            rememberMe: _rememberMe,
+                          );
+                        },
+                  child: _controller.isLoading
+                      ? const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : Text(l10n.login),
+                ),
               ],
             ),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: controller.isLoading
-                  ? null
-                  : () {
-                      controller.login(
-                        context: context,
-                        email: emailController.text,
-                        password: passwordController.text,
-                        rememberMe: rememberMe,
-                      );
-                    },
-              child: controller.isLoading
-                  ? const SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : Text(l10n.login),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
