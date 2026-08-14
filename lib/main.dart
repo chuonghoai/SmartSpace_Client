@@ -40,6 +40,7 @@ class SmartSpaceApp extends StatelessWidget {
             Locale('en'),
           ],
           routerConfig: appRouter,
+          debugShowCheckedModeBanner: false,
         );
       },
     );

@@ -47,6 +47,22 @@ Thiết bị thật (điện thoại cắm cáp USB hoặc qua Wi-Fi) không th�
 flutter run --dart-define=IS_PHYSICAL=true
 ```
 
+### 3. Chạy trên thiết bị chỉ định
+Chạy trên emulator:
+```bash
+flutter run -d emulator-5554
+```
+
+Chạy trên web:
+```bash
+flutter run -d edge
+```
+
+Lệnh xem các thiết bị có thể được chạy:
+```bash
+flutter devices
+```
+
 ## 📦 Triển khai Môi trường Thật (Production)
 
 Khi build ứng dụng để deploy lên môi trường Production (môi trường thật), chúng ta không dùng các IP local trong `.env` nữa. Bạn chỉ cần truyền trực tiếp URL API thực tế thông qua cờ `API_URL`.

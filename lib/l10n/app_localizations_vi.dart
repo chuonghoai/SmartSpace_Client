@@ -9,7 +9,7 @@ class AppLocalizationsVi extends AppLocalizations {
   AppLocalizationsVi([String locale = 'vi']) : super(locale);
 
   @override
-  String get appTitle => 'Ứng dụng của tôi';
+  String get appTitle => 'Smart Space';
 
   @override
   String get login => 'Đăng nhập';
@@ -37,4 +37,34 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get english => 'Tiếng Anh';
+
+  @override
+  String get smartSpaceAppName => 'Smart Space';
+
+  @override
+  String get welcomeBack => 'Chào mừng trở lại';
+
+  @override
+  String get signInToContinue => 'Đăng nhập để tiếp tục sử dụng Smart Space.';
+
+  @override
+  String get forgotPassword => 'Quên mật khẩu?';
+
+  @override
+  String get orContinueWith => 'hoặc tiếp tục với';
+
+  @override
+  String get googleLogin => 'Đăng nhập với Google';
+
+  @override
+  String get areYouNewUser => 'Bạn chưa có tài khoản?';
+
+  @override
+  String get signUp => 'Đăng ký';
+
+  @override
+  String get splashTagline => 'Không gian tốt hơn bắt đầu từ bạn.';
+
+  @override
+  String get loading => 'đang tải...';
 }

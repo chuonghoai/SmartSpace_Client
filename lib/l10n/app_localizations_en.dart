@@ -9,10 +9,10 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'My App';
+  String get appTitle => 'Smart Space';
 
   @override
-  String get login => 'Login';
+  String get login => 'Log in';
 
   @override
   String get email => 'Email';
@@ -37,4 +37,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get english => 'English';
+
+  @override
+  String get smartSpaceAppName => 'Smart Space';
+
+  @override
+  String get welcomeBack => 'Welcome back';
+
+  @override
+  String get signInToContinue => 'Sign in to continue using Smart Space.';
+
+  @override
+  String get forgotPassword => 'Forgot Password?';
+
+  @override
+  String get orContinueWith => 'or continue with';
+
+  @override
+  String get googleLogin => 'Google Login';
+
+  @override
+  String get areYouNewUser => 'Are you new user?';
+
+  @override
+  String get signUp => 'Sign up';
+
+  @override
+  String get splashTagline => 'A better space starts with you.';
+
+  @override
+  String get loading => 'loading...';
 }

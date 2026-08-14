@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smartspace_client/features/auth/controller/login_controller.dart';
 import 'package:smartspace_client/l10n/app_localizations.dart';
-import '../../../core/localization/locale_provider.dart';
+import '../../shared/language_switch/language_switch.dart';
 
 class MobileLoginScreen extends StatefulWidget {
   const MobileLoginScreen({super.key});
@@ -30,98 +30,256 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
     super.dispose();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.login),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.language),
-            onPressed: () {
-              final newLocale = localeProvider.locale.languageCode == 'vi'
-                  ? const Locale('en')
-                  : const Locale('vi');
-              localeProvider.setLocale(newLocale);
-            },
-          ),
-        ],
-      ),
-      body: ListenableBuilder(
-        listenable: _controller,
-        builder: (context, _) {
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                if (_controller.error != null) ...[
-                  Text(
-                    _controller.error!,
-                    style: TextStyle(color: Theme.of(context).colorScheme.error),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 16),
-                ],
-                TextField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    labelText: l10n.email,
-                    border: const OutlineInputBorder(),
-                  ),
+      backgroundColor: theme.scaffoldBackgroundColor,
+      body: SafeArea(
+        bottom: false,
+        child: Container(
+          color: theme.scaffoldBackgroundColor,
+          child: ListenableBuilder(
+            listenable: _controller,
+            builder: (context, _) {
+              return SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24.0,
+                  vertical: 16.0,
                 ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: _passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: l10n.password,
-                    border: const OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Row(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Checkbox(
-                      value: _rememberMe,
-                      onChanged: _controller.isLoading
-                          ? null
-                          : (value) {
-                              setState(() {
-                                _rememberMe = value ?? false;
-                              });
-                            },
+                    const Align(
+                      alignment: Alignment.centerRight,
+                      child: LanguageSwitch(),
                     ),
-                    Text(l10n.rememberMe),
+                    const SizedBox(height: 48),
+
+                    // Logo Placeholder
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          size: 64,
+                          color: colorScheme.primary,
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          l10n.smartSpaceAppName,
+                          style: textTheme.headlineLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: colorScheme.primary,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+
+                    // Subtitle
+                    const SizedBox(height: 48),
+                    Text(
+                      l10n.welcomeBack,
+                      style: textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      l10n.signInToContinue,
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+
+                    // Error message
+                    if (_controller.error != null) ...[
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: colorScheme.error.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          _controller.error!,
+                          style: TextStyle(color: colorScheme.error),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+
+                    // Email input
+                    Text(
+                      l10n.email,
+                      style: textTheme.labelLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(hintText: l10n.email),
+                    ),
+                    const SizedBox(height: 20),
+
+                    // Password input
+                    Text(
+                      l10n.password,
+                      style: textTheme.labelLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: _passwordController,
+                      obscureText: true,
+                      decoration: InputDecoration(hintText: l10n.password),
+                    ),
+                    const SizedBox(height: 8),
+
+                    // Remember me check box
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Checkbox(
+                              value: _rememberMe,
+                              onChanged: _controller.isLoading
+                                  ? null
+                                  : (value) {
+                                      setState(() {
+                                        _rememberMe = value ?? false;
+                                      });
+                                    },
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                            ),
+                            Text(l10n.rememberMe),
+                          ],
+                        ),
+
+                        // Forgot password
+                        TextButton(
+                          onPressed: () {
+                            // TODO: Implement forgot password
+                          },
+                          child: Text(
+                            l10n.forgotPassword,
+                            style: TextStyle(
+                              color: colorScheme.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Login button
+                    ElevatedButton(
+                      onPressed: _controller.isLoading
+                          ? null
+                          : () {
+                              _controller.login(
+                                context: context,
+                                email: _emailController.text,
+                                password: _passwordController.text,
+                                rememberMe: _rememberMe,
+                              );
+                            },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                      ),
+                      child: _controller.isLoading
+                          ? const SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : Text(
+                              l10n.login,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                    ),
+                    const SizedBox(height: 32),
+
+                    // Or continue with
+                    Row(
+                      children: [
+                        const Expanded(child: Divider()),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text(
+                            l10n.orContinueWith,
+                            style: textTheme.bodySmall?.copyWith(
+                              color: colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ),
+                        const Expanded(child: Divider()),
+                      ],
+                    ),
+                    const SizedBox(height: 32),
+
+                    // Sign in with Google
+                    OutlinedButton.icon(
+                      onPressed: () {
+                        // TODO: Implement Google Login
+                      },
+                      icon: const Icon(Icons.g_mobiledata, size: 28),
+                      label: Text(l10n.googleLogin),
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        foregroundColor: colorScheme.onSurface,
+                        side: BorderSide(color: theme.dividerColor),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Sign up
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(l10n.areYouNewUser, style: textTheme.bodyMedium),
+                        TextButton(
+                          onPressed: () {
+                            // TODO: Navigate to Sign Up
+                          },
+                          child: Text(
+                            l10n.signUp,
+                            style: TextStyle(
+                              color: colorScheme.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
                   ],
                 ),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  onPressed: _controller.isLoading
-                      ? null
-                      : () {
-                          _controller.login(
-                            context: context,
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                            rememberMe: _rememberMe,
-                          );
-                        },
-                  child: _controller.isLoading
-                      ? const SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        )
-                      : Text(l10n.login),
-                ),
-              ],
-            ),
-          );
-        },
+              );
+            },
+          ),
+        ),
       ),
     );
   }

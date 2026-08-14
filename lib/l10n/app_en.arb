@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
-  "appTitle": "My App",
-  "login": "Login",
+  "appTitle": "Smart Space",
+  "login": "Log in",
   "email": "Email",
   "password": "Password",
   "rememberMe": "Remember me",
@@ -9,5 +9,15 @@
   "settings": "Settings",
   "language": "Language",
   "vietnamese": "Vietnamese",
-  "english": "English"
+  "english": "English",
+  "smartSpaceAppName": "Smart Space",
+  "welcomeBack": "Welcome back",
+  "signInToContinue": "Sign in to continue using Smart Space.",
+  "forgotPassword": "Forgot Password?",
+  "orContinueWith": "or continue with",
+  "googleLogin": "Google Login",
+  "areYouNewUser": "Are you new user?",
+  "signUp": "Sign up",
+  "splashTagline": "A better space starts with you.",
+  "loading": "loading..."
 }

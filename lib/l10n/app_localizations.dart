@@ -101,13 +101,13 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
-  /// **'My App'**
+  /// **'Smart Space'**
   String get appTitle;
 
   /// No description provided for @login.
   ///
   /// In en, this message translates to:
-  /// **'Login'**
+  /// **'Log in'**
   String get login;
 
   /// No description provided for @email.
@@ -157,6 +157,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'English'**
   String get english;
+
+  /// No description provided for @smartSpaceAppName.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Space'**
+  String get smartSpaceAppName;
+
+  /// No description provided for @welcomeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back'**
+  String get welcomeBack;
+
+  /// No description provided for @signInToContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to continue using Smart Space.'**
+  String get signInToContinue;
+
+  /// No description provided for @forgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get forgotPassword;
+
+  /// No description provided for @orContinueWith.
+  ///
+  /// In en, this message translates to:
+  /// **'or continue with'**
+  String get orContinueWith;
+
+  /// No description provided for @googleLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Login'**
+  String get googleLogin;
+
+  /// No description provided for @areYouNewUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you new user?'**
+  String get areYouNewUser;
+
+  /// No description provided for @signUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up'**
+  String get signUp;
+
+  /// No description provided for @splashTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'A better space starts with you.'**
+  String get splashTagline;
+
+  /// No description provided for @loading.
+  ///
+  /// In en, this message translates to:
+  /// **'loading...'**
+  String get loading;
 }
 
 class _AppLocalizationsDelegate

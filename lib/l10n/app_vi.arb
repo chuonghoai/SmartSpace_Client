@@ -1,6 +1,6 @@
 {
   "@@locale": "vi",
-  "appTitle": "Ứng dụng của tôi",
+  "appTitle": "Smart Space",
   "login": "Đăng nhập",
   "email": "Email",
   "password": "Mật khẩu",
@@ -9,5 +9,15 @@
   "settings": "Cài đặt",
   "language": "Ngôn ngữ",
   "vietnamese": "Tiếng Việt",
-  "english": "Tiếng Anh"
+  "english": "Tiếng Anh",
+  "smartSpaceAppName": "Smart Space",
+  "welcomeBack": "Chào mừng trở lại",
+  "signInToContinue": "Đăng nhập để tiếp tục sử dụng Smart Space.",
+  "forgotPassword": "Quên mật khẩu?",
+  "orContinueWith": "hoặc tiếp tục với",
+  "googleLogin": "Đăng nhập với Google",
+  "areYouNewUser": "Bạn chưa có tài khoản?",
+  "signUp": "Đăng ký",
+  "splashTagline": "Không gian tốt hơn bắt đầu từ bạn.",
+  "loading": "đang tải..."
 }
