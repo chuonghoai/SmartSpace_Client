@@ -61,7 +61,7 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
                 if (_controller.error != null) ...[
                   Text(
                     _controller.error!,
-                    style: const TextStyle(color: Colors.red),
+                    style: TextStyle(color: Theme.of(context).colorScheme.error),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 16),
