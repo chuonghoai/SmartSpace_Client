@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smartspace_client/features/auth/controller/login_controller.dart';
 import 'package:smartspace_client/l10n/app_localizations.dart';
-import '../../shared/language_switch/language_switch.dart';
+import '../../shared/login_setting/login_setting.dart';
 
 class WebLoginScreen extends StatefulWidget {
   const WebLoginScreen({super.key});
@@ -38,6 +38,7 @@ class _WebLoginScreenState extends State<WebLoginScreen> {
     final textTheme = theme.textTheme;
 
     return Scaffold(
+      endDrawer: const LoginSetting(),
       body: Stack(
         children: [
           Row(
@@ -296,11 +297,20 @@ class _WebLoginScreenState extends State<WebLoginScreen> {
             ],
           ),
 
-          // Language Switcher Positioned at the top right
+          // Settings Drawer Icon Positioned at the top right
           Positioned(
             top: 24,
             right: 32,
-            child: const LanguageSwitch(),
+            child: Builder(
+              builder: (context) {
+                return IconButton(
+                  icon: const Icon(Icons.settings),
+                  onPressed: () {
+                    Scaffold.of(context).openEndDrawer();
+                  },
+                );
+              }
+            ),
           ),
         ],
       ),

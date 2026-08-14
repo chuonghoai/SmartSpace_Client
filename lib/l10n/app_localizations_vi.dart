@@ -67,4 +67,16 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get loading => 'đang tải...';
+
+  @override
+  String get theme => 'Giao diện';
+
+  @override
+  String get themeLight => 'Sáng';
+
+  @override
+  String get themeDark => 'Tối';
+
+  @override
+  String get themeSystem => 'Hệ thống';
 }

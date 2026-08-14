@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smartspace_client/features/auth/controller/login_controller.dart';
 import 'package:smartspace_client/l10n/app_localizations.dart';
-import '../../shared/language_switch/language_switch.dart';
+import '../../shared/login_setting/login_setting.dart';
 
 class MobileLoginScreen extends StatefulWidget {
   const MobileLoginScreen({super.key});
@@ -30,8 +30,6 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
     super.dispose();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -41,6 +39,7 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
+      endDrawer: const LoginSetting(),
       body: SafeArea(
         bottom: false,
         child: Container(
@@ -57,11 +56,20 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Align(
+                    Align(
                       alignment: Alignment.centerRight,
-                      child: LanguageSwitch(),
+                      child: Builder(
+                        builder: (context) {
+                          return IconButton(
+                            icon: const Icon(Icons.settings),
+                            onPressed: () {
+                              Scaffold.of(context).openEndDrawer();
+                            },
+                          );
+                        },
+                      ),
                     ),
-                    const SizedBox(height: 48),
+                    const SizedBox(height: 36),
 
                     // Logo Placeholder
                     Row(

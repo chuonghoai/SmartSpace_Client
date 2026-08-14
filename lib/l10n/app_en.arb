@@ -19,5 +19,9 @@
   "areYouNewUser": "Are you new user?",
   "signUp": "Sign up",
   "splashTagline": "A better space starts with you.",
-  "loading": "loading..."
+  "loading": "loading...",
+  "theme": "Theme",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "themeSystem": "System"
 }

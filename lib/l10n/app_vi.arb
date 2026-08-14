@@ -19,5 +19,9 @@
   "areYouNewUser": "Bạn chưa có tài khoản?",
   "signUp": "Đăng ký",
   "splashTagline": "Không gian tốt hơn bắt đầu từ bạn.",
-  "loading": "đang tải..."
+  "loading": "đang tải...",
+  "theme": "Giao diện",
+  "themeLight": "Sáng",
+  "themeDark": "Tối",
+  "themeSystem": "Hệ thống"
 }
