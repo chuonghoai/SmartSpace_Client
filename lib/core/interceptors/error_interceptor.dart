@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:smartspace_client/core/auth/refresh_token_service.dart';
 import 'package:smartspace_client/core/auth/access_token_service.dart';
 import 'package:smartspace_client/features/auth/services/auth_service.dart';
+import 'package:smartspace_client/routes/router_path.dart';
 import '../../routes/app_router.dart';
 
 class ErrorInterceptor extends Interceptor {
@@ -49,7 +50,7 @@ class ErrorInterceptor extends Interceptor {
 
       await authService.logout();
       unauthenticatedStream.add(reason);
-      appRouter.go('/login');
+      appRouter.go(RouterPath.login);
       return handler.next(err);
     }
 

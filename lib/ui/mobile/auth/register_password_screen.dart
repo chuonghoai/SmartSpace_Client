@@ -1,20 +1,20 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smartspace_client/features/auth/controller/register_controller.dart';
 import 'package:smartspace_client/l10n/app_localizations.dart';
+import 'package:smartspace_client/ui/shared/login_setting/login_setting.dart';
 
-class MobileCompleteProfileScreen extends StatefulWidget {
-  const MobileCompleteProfileScreen({super.key});
+class MobileRegisterPasswordScreen extends StatefulWidget {
+  const MobileRegisterPasswordScreen({super.key});
 
   @override
-  State<MobileCompleteProfileScreen> createState() => _MobileCompleteProfileScreenState();
+  State<MobileRegisterPasswordScreen> createState() => _MobileRegisterPasswordScreenState();
 }
 
-class _MobileCompleteProfileScreenState extends State<MobileCompleteProfileScreen> {
+class _MobileRegisterPasswordScreenState extends State<MobileRegisterPasswordScreen> {
   late final RegisterController _controller;
-  final TextEditingController _fullnameController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
 
   @override
   void initState() {
@@ -24,8 +24,8 @@ class _MobileCompleteProfileScreenState extends State<MobileCompleteProfileScree
 
   @override
   void dispose() {
-    _fullnameController.dispose();
-    _phoneController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -38,8 +38,28 @@ class _MobileCompleteProfileScreenState extends State<MobileCompleteProfileScree
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
+      endDrawer: const LoginSetting(),
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            if (!_controller.isLoading) {
+              context.pop();
+            }
+          },
+        ),
+        actions: [
+          Builder(
+            builder: (context) {
+              return IconButton(
+                icon: const Icon(Icons.settings),
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
+              );
+            },
+          ),
+        ],
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -57,7 +77,7 @@ class _MobileCompleteProfileScreenState extends State<MobileCompleteProfileScree
                 children: [
                   const SizedBox(height: 16),
                   Text(
-                    l10n.completeProfile,
+                    l10n.registerTitle,
                     style: textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: colorScheme.primary,
@@ -65,59 +85,9 @@ class _MobileCompleteProfileScreenState extends State<MobileCompleteProfileScree
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    l10n.profileTitle,
+                    l10n.passwordTitle,
                     style: textTheme.bodyLarge?.copyWith(
                       color: colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-
-                  // Avatar Picker
-                  Center(
-                    child: GestureDetector(
-                      onTap: () {
-                        _controller.selectAvatar(ImageSource.gallery);
-                      },
-                      child: Stack(
-                        alignment: Alignment.bottomRight,
-                        children: [
-                          CircleAvatar(
-                            radius: 50,
-                            backgroundColor: colorScheme.surfaceContainerHighest,
-                            backgroundImage: _controller.selectedAvatarFile != null
-                                ? FileImage(File(_controller.selectedAvatarFile!.path))
-                                : null,
-                            child: _controller.selectedAvatarFile == null
-                                ? Icon(
-                                    Icons.person_outline,
-                                    size: 50,
-                                    color: colorScheme.onSurfaceVariant,
-                                  )
-                                : null,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                              color: colorScheme.primary,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(
-                              Icons.camera_alt,
-                              size: 20,
-                              color: colorScheme.onPrimary,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Center(
-                    child: Text(
-                      l10n.avatar,
-                      style: textTheme.bodySmall?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
                     ),
                   ),
                   const SizedBox(height: 32),
@@ -139,38 +109,39 @@ class _MobileCompleteProfileScreenState extends State<MobileCompleteProfileScree
                     const SizedBox(height: 16),
                   ],
 
-                  // Fullname input
+                  // Password input
                   Text(
-                    l10n.fullname,
+                    l10n.password,
                     style: textTheme.labelLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 8),
                   TextField(
-                    controller: _fullnameController,
+                    controller: _passwordController,
+                    obscureText: true,
                     decoration: InputDecoration(
-                      hintText: l10n.fullname,
-                      prefixIcon: const Icon(Icons.person_outline),
+                      hintText: l10n.enterPassword,
+                      prefixIcon: const Icon(Icons.lock_outline),
                     ),
                     onChanged: (value) => _controller.clearError(),
                   ),
                   const SizedBox(height: 20),
 
-                  // Phone input
+                  // Confirm Password input
                   Text(
-                    l10n.phone,
+                    l10n.confirmPassword,
                     style: textTheme.labelLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 8),
                   TextField(
-                    controller: _phoneController,
-                    keyboardType: TextInputType.phone,
+                    controller: _confirmPasswordController,
+                    obscureText: true,
                     decoration: InputDecoration(
-                      hintText: l10n.phone,
-                      prefixIcon: const Icon(Icons.phone_outlined),
+                      hintText: l10n.confirmPassword,
+                      prefixIcon: const Icon(Icons.lock_outline),
                     ),
                     onChanged: (value) => _controller.clearError(),
                   ),
@@ -181,10 +152,10 @@ class _MobileCompleteProfileScreenState extends State<MobileCompleteProfileScree
                     onPressed: _controller.isLoading
                         ? null
                         : () {
-                            _controller.completeProfile(
+                            _controller.registerAccount(
                               context: context,
-                              fullname: _fullnameController.text,
-                              phone: _phoneController.text,
+                              password: _passwordController.text,
+                              confirmPassword: _confirmPasswordController.text,
                             );
                           },
                     style: ElevatedButton.styleFrom(
@@ -197,7 +168,7 @@ class _MobileCompleteProfileScreenState extends State<MobileCompleteProfileScree
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
                         : Text(
-                            l10n.continueText,
+                            l10n.createAccount,
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,

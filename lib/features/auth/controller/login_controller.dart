@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smartspace_client/core/constants/registration_status.dart';
 import 'package:smartspace_client/features/auth/services/auth_service.dart';
+import 'package:smartspace_client/l10n/app_localizations.dart';
+import 'package:smartspace_client/routes/router_path.dart';
 
 class LoginController extends ChangeNotifier {
   final AuthService _authService;
@@ -20,10 +22,11 @@ class LoginController extends ChangeNotifier {
     required String password,
     required bool rememberMe,
   }) async {
+    final l10n = AppLocalizations.of(context)!;
     if (_isLoading) return;
 
     if (email.trim().isEmpty || password.isEmpty) {
-      _error = 'Please enter email and password';
+      _error = l10n.pleaseEnterEmailAndPassword;
       notifyListeners();
       return;
     }
@@ -39,9 +42,9 @@ class LoginController extends ChangeNotifier {
         final registrationStatus = response.data!.registrationStatus;
         if (context.mounted) {
           if (registrationStatus == ERegistrationStatus.completed) {
-            context.go('/home');
+            context.go(RouterPath.home);
           } else {
-            context.go('/complete-profile');
+            context.go(RouterPath.completeProfile);
           }
         }
       } else {

@@ -14,6 +14,7 @@ class AuthService {
 
   const AuthService({required this.authRepo});
 
+  /// Login
   Future<ApiResponse<TokenModel>> login(
     String email,
     String password,
@@ -43,6 +44,7 @@ class AuthService {
     return authRepo.logout();
   }
 
+  /// Refresh access token with refresh token in secured storage
   Future<bool> refreshToken(String refreshToken) async {
     try {
       final response = await authRepo.refreshToken(refreshToken);
@@ -56,28 +58,50 @@ class AuthService {
     }
   }
 
+  /// Register step 1: Send OTP with email
   Future<ApiResponse<void>> sendOtpRegister(String email) async {
     return await authRepo.sendOtpRegister(email);
   }
 
+  /// Register step 2: Verify OTP with email
   Future<ApiResponse<void>> verifyOtpRegister(String email, String otp) async {
     return await authRepo.verifyOtpRegister(email, otp);
   }
 
+  /// Register step 3: Create account successfully with registrationStatus = incomplete
   Future<ApiResponse<TokenModel>> register(
     String email,
     String password,
     String confirmPassword,
   ) async {
-    return await authRepo.register(email, password, confirmPassword);
+    final response = await authRepo.register(email, password, confirmPassword);
+    final data = response.data;
+
+    if (response.success && data != null) {
+      await Future.wait([
+        accessTokenService.saveAccessToken(data.accessToken),
+        refreshTokenService.saveRefreshToken(data.refreshToken),
+        userStorageService.saveUser(data.userModel!),
+      ]);
+    }
+
+    return response;
   }
 
+  /// Register step 4: Fill SDT and fullname to complete create account
   Future<ApiResponse<UserModel>> updateProfile(
     String fullName,
     String phone,
     String? avatarUrl,
   ) async {
-    return await authRepo.updateProfile(fullName, phone, avatarUrl);
+    final response = await authRepo.updateProfile(fullName, phone, avatarUrl);
+    final data = response.data;
+
+    if (response.success && data != null) {
+      await userStorageService.saveUser(data);
+    }
+
+    return response;
   }
 }
 

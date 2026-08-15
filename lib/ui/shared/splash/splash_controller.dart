@@ -7,6 +7,7 @@ import 'package:smartspace_client/core/interceptors/error_interceptor.dart';
 import 'package:smartspace_client/core/localization/locale_provider.dart';
 import 'package:smartspace_client/core/theme/theme_provider.dart';
 import 'package:smartspace_client/features/auth/services/auth_service.dart';
+import 'package:smartspace_client/routes/router_path.dart';
 
 class SplashController extends ChangeNotifier {
   bool _isLoading = true;
@@ -38,16 +39,23 @@ class SplashController extends ChangeNotifier {
 
       // Access token valid -> /home
       if (accessToken != null && accessToken.isNotEmpty) {
-        context.go('/home');
+        context.go(RouterPath.home);
         return;
       }
 
       // Access token invalid && refresh token valid -> refresh access token -> /home
       if (refreshToken != null && refreshToken.isNotEmpty) {
-        final success = await authService.refreshToken(refreshToken);
+        bool success = false;
+        try {
+          success = await authService
+              .refreshToken(refreshToken)
+              .timeout(const Duration(seconds: 3));
+        } catch (_) {
+          // Ignore timeout or other errors; fallback to login
+        }
         if (!context.mounted) return;
         if (success) {
-          context.go('/home');
+          context.go(RouterPath.home);
           return;
         }
       }
@@ -57,13 +65,13 @@ class SplashController extends ChangeNotifier {
         await authService.logout();
         if (!context.mounted) return;
         ErrorInterceptor.unauthenticatedStream.add('expired');
-        context.go('/login');
+        context.go(RouterPath.login);
         return;
       }
 
       // No session data at all -> unauthorized -> /login
       ErrorInterceptor.unauthenticatedStream.add('unauthorized');
-      context.go('/login');
+      context.go(RouterPath.login);
     } catch (e) {
       _isLoading = false;
       _errorMessage = e.toString();

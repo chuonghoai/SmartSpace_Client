@@ -17,3 +17,15 @@ Project sử dụng package `go_router` để quản lý điều hướng. Cần
 - Đẩy route mới lên và thay thế hoàn toàn route hiện tại ở vị trí đỉnh stack.
 
 Luôn tham khảo kiến trúc của `LoginController` để xem cách `context.go()` được gọi khi điều hướng thay đổi application flow.
+
+# Quy tắc triển khai đường dẫn điều hướng
+### 1. Không hard code path 
+- tạo một đường dẫn mới trong `router_path.dart`, ví dụ: 
+```dart
+static const String splash = '/splash';
+```
+- khi cần sử dụng path để điều hướng, sử dụng `context.go(RouterPath.splash)` để điều hướng tới splash screen, tuyệt đối không hard code chuỗi path trong code điều khiển hoặc logic của giao diện
+### 2. Quy tắc tạo path mới
+- path là duy nhất trên toàn hệ thống, không được trùng lặp
+- sau khi tạo đường dẫn mới trong `router_path.dart`, tiếp tục sử dụng nó để cấu hình đường dẫn trong `app_router.dart`
+- chỉ khi hoàn thành cấu hình trong `app_router.dart` mới được xem như cấu hình xong đường dẫn đến một màn hình giao diện

@@ -1,21 +1,20 @@
-import 'dart:io';
-import 'package:flutter/foundation.dart'; // for kIsWeb
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smartspace_client/features/auth/controller/register_controller.dart';
 import 'package:smartspace_client/l10n/app_localizations.dart';
+import 'package:smartspace_client/ui/shared/login_setting/login_setting.dart';
 
-class WebCompleteProfileScreen extends StatefulWidget {
-  const WebCompleteProfileScreen({super.key});
+class WebRegisterPasswordScreen extends StatefulWidget {
+  const WebRegisterPasswordScreen({super.key});
 
   @override
-  State<WebCompleteProfileScreen> createState() => _WebCompleteProfileScreenState();
+  State<WebRegisterPasswordScreen> createState() => _WebRegisterPasswordScreenState();
 }
 
-class _WebCompleteProfileScreenState extends State<WebCompleteProfileScreen> {
+class _WebRegisterPasswordScreenState extends State<WebRegisterPasswordScreen> {
   late final RegisterController _controller;
-  final TextEditingController _fullnameController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
 
   @override
   void initState() {
@@ -25,8 +24,8 @@ class _WebCompleteProfileScreenState extends State<WebCompleteProfileScreen> {
 
   @override
   void dispose() {
-    _fullnameController.dispose();
-    _phoneController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -39,6 +38,7 @@ class _WebCompleteProfileScreenState extends State<WebCompleteProfileScreen> {
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
+      endDrawer: const LoginSetting(),
       body: ListenableBuilder(
         listenable: _controller,
         builder: (context, _) {
@@ -59,9 +59,32 @@ class _WebCompleteProfileScreenState extends State<WebCompleteProfileScreen> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.arrow_back),
+                            onPressed: () {
+                              if (!_controller.isLoading) {
+                                context.pop();
+                              }
+                            },
+                          ),
+                          Builder(
+                            builder: (context) {
+                              return IconButton(
+                                icon: const Icon(Icons.settings),
+                                onPressed: () {
+                                  Scaffold.of(context).openEndDrawer();
+                                },
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                       const SizedBox(height: 16),
                       Text(
-                        l10n.completeProfile,
+                        l10n.registerTitle,
                         style: textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: colorScheme.primary,
@@ -70,63 +93,11 @@ class _WebCompleteProfileScreenState extends State<WebCompleteProfileScreen> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        l10n.profileTitle,
+                        l10n.passwordTitle,
                         style: textTheme.bodyLarge?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),
                         textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 32),
-
-                      // Avatar Picker
-                      Center(
-                        child: GestureDetector(
-                          onTap: () {
-                            _controller.selectAvatar(ImageSource.gallery);
-                          },
-                          child: Stack(
-                            alignment: Alignment.bottomRight,
-                            children: [
-                              CircleAvatar(
-                                radius: 50,
-                                backgroundColor: colorScheme.surfaceContainerHighest,
-                                backgroundImage: _controller.selectedAvatarFile != null
-                                    ? (kIsWeb
-                                        ? NetworkImage(_controller.selectedAvatarFile!.path) as ImageProvider
-                                        : FileImage(File(_controller.selectedAvatarFile!.path)))
-                                    : null,
-                                child: _controller.selectedAvatarFile == null
-                                    ? Icon(
-                                        Icons.person_outline,
-                                        size: 50,
-                                        color: colorScheme.onSurfaceVariant,
-                                      )
-                                    : null,
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(4),
-                                decoration: BoxDecoration(
-                                  color: colorScheme.primary,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Icon(
-                                  Icons.camera_alt,
-                                  size: 20,
-                                  color: colorScheme.onPrimary,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Center(
-                        child: Text(
-                          l10n.avatar,
-                          style: textTheme.bodySmall?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                          ),
-                        ),
                       ),
                       const SizedBox(height: 32),
 
@@ -147,38 +118,39 @@ class _WebCompleteProfileScreenState extends State<WebCompleteProfileScreen> {
                         const SizedBox(height: 16),
                       ],
 
-                      // Fullname input
+                      // Password input
                       Text(
-                        l10n.fullname,
+                        l10n.password,
                         style: textTheme.labelLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: 8),
                       TextField(
-                        controller: _fullnameController,
+                        controller: _passwordController,
+                        obscureText: true,
                         decoration: InputDecoration(
-                          hintText: l10n.fullname,
-                          prefixIcon: const Icon(Icons.person_outline),
+                          hintText: l10n.enterPassword,
+                          prefixIcon: const Icon(Icons.lock_outline),
                         ),
                         onChanged: (value) => _controller.clearError(),
                       ),
                       const SizedBox(height: 20),
 
-                      // Phone input
+                      // Confirm Password input
                       Text(
-                        l10n.phone,
+                        l10n.confirmPassword,
                         style: textTheme.labelLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: 8),
                       TextField(
-                        controller: _phoneController,
-                        keyboardType: TextInputType.phone,
+                        controller: _confirmPasswordController,
+                        obscureText: true,
                         decoration: InputDecoration(
-                          hintText: l10n.phone,
-                          prefixIcon: const Icon(Icons.phone_outlined),
+                          hintText: l10n.confirmPassword,
+                          prefixIcon: const Icon(Icons.lock_outline),
                         ),
                         onChanged: (value) => _controller.clearError(),
                       ),
@@ -189,10 +161,10 @@ class _WebCompleteProfileScreenState extends State<WebCompleteProfileScreen> {
                         onPressed: _controller.isLoading
                             ? null
                             : () {
-                                _controller.completeProfile(
+                                _controller.registerAccount(
                                   context: context,
-                                  fullname: _fullnameController.text,
-                                  phone: _phoneController.text,
+                                  password: _passwordController.text,
+                                  confirmPassword: _confirmPasswordController.text,
                                 );
                               },
                         style: ElevatedButton.styleFrom(
@@ -205,7 +177,7 @@ class _WebCompleteProfileScreenState extends State<WebCompleteProfileScreen> {
                                 child: CircularProgressIndicator(strokeWidth: 2),
                               )
                             : Text(
-                                l10n.continueText,
+                                l10n.createAccount,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,

@@ -79,4 +79,121 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get themeSystem => 'Hệ thống';
+
+  @override
+  String get registerTitle => 'Đăng ký';
+
+  @override
+  String get next => 'Tiếp tục';
+
+  @override
+  String get submit => 'Xác nhận';
+
+  @override
+  String get verify => 'Xác thực';
+
+  @override
+  String get continueText => 'Tiếp tục';
+
+  @override
+  String get enterEmail => 'Nhập email của bạn';
+
+  @override
+  String get emailRequired => 'Vui lòng nhập email';
+
+  @override
+  String get invalidEmail => 'Định dạng email không hợp lệ';
+
+  @override
+  String get otp => 'Mã OTP';
+
+  @override
+  String get enterOtp => 'Nhập mã OTP';
+
+  @override
+  String get otpRequired => 'Vui lòng nhập mã OTP';
+
+  @override
+  String get otpSentTo => 'Mã OTP đã được gửi đến email của bạn';
+
+  @override
+  String get confirmPassword => 'Xác nhận mật khẩu';
+
+  @override
+  String get enterPassword => 'Nhập mật khẩu';
+
+  @override
+  String get passwordRequired => 'Vui lòng nhập mật khẩu';
+
+  @override
+  String get passwordsDoNotMatch => 'Mật khẩu không khớp';
+
+  @override
+  String get completeProfile => 'Hoàn thiện hồ sơ';
+
+  @override
+  String get fullname => 'Họ và tên';
+
+  @override
+  String get phone => 'Số điện thoại';
+
+  @override
+  String get avatar => 'Ảnh đại diện (Không bắt buộc)';
+
+  @override
+  String get fullnameRequired => 'Vui lòng nhập họ và tên';
+
+  @override
+  String get phoneRequired => 'Vui lòng nhập số điện thoại';
+
+  @override
+  String get camera => 'Máy ảnh';
+
+  @override
+  String get gallery => 'Thư viện';
+
+  @override
+  String get selectImage => 'Chọn ảnh';
+
+  @override
+  String get createAccount => 'Tạo tài khoản';
+
+  @override
+  String get registerSuccess => 'Đăng ký thành công!';
+
+  @override
+  String get retry => 'Thử lại';
+
+  @override
+  String get emailTitle => 'Địa chỉ email của bạn là gì?';
+
+  @override
+  String get otpTitle => 'Xác thực email của bạn';
+
+  @override
+  String get passwordTitle => 'Tạo mật khẩu';
+
+  @override
+  String get profileTitle => 'Cho chúng tôi biết về bạn';
+
+  @override
+  String get selectAvatar => 'Chọn ảnh đại diện';
+
+  @override
+  String get pleaseEnterEmailAndPassword => 'Vui lòng nhập email và mật khẩu';
+
+  @override
+  String get pleaseEnterEmail => 'Vui lòng nhập email';
+
+  @override
+  String get pleaseEnterOTP => 'Vui lòng nhập mã OTP';
+
+  @override
+  String get pleaseEnterPassword => 'Vui lòng nhập mật khẩu';
+
+  @override
+  String get pleaseEnterFullName => 'Vui lòng nhập họ tên';
+
+  @override
+  String get pleaseEnterPhoneNumber => 'Vui lòng nhập số điện thoại';
 }

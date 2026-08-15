@@ -79,4 +79,121 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get themeSystem => 'System';
+
+  @override
+  String get registerTitle => 'Register';
+
+  @override
+  String get next => 'Next';
+
+  @override
+  String get submit => 'Submit';
+
+  @override
+  String get verify => 'Verify';
+
+  @override
+  String get continueText => 'Continue';
+
+  @override
+  String get enterEmail => 'Enter your email';
+
+  @override
+  String get emailRequired => 'Email is required';
+
+  @override
+  String get invalidEmail => 'Invalid email format';
+
+  @override
+  String get otp => 'OTP Code';
+
+  @override
+  String get enterOtp => 'Enter OTP code';
+
+  @override
+  String get otpRequired => 'OTP is required';
+
+  @override
+  String get otpSentTo => 'OTP has been sent to your email';
+
+  @override
+  String get confirmPassword => 'Confirm Password';
+
+  @override
+  String get enterPassword => 'Enter password';
+
+  @override
+  String get passwordRequired => 'Password is required';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get completeProfile => 'Complete Profile';
+
+  @override
+  String get fullname => 'Full Name';
+
+  @override
+  String get phone => 'Phone Number';
+
+  @override
+  String get avatar => 'Avatar (Optional)';
+
+  @override
+  String get fullnameRequired => 'Full name is required';
+
+  @override
+  String get phoneRequired => 'Phone number is required';
+
+  @override
+  String get camera => 'Camera';
+
+  @override
+  String get gallery => 'Gallery';
+
+  @override
+  String get selectImage => 'Select Image';
+
+  @override
+  String get createAccount => 'Create Account';
+
+  @override
+  String get registerSuccess => 'Registration successful!';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get emailTitle => 'What\'s your email address?';
+
+  @override
+  String get otpTitle => 'Verify your email';
+
+  @override
+  String get passwordTitle => 'Create a password';
+
+  @override
+  String get profileTitle => 'Tell us about yourself';
+
+  @override
+  String get selectAvatar => 'Select avatar';
+
+  @override
+  String get pleaseEnterEmailAndPassword => 'Please enter email and password';
+
+  @override
+  String get pleaseEnterEmail => 'Please enter email';
+
+  @override
+  String get pleaseEnterOTP => 'Please enter OTP';
+
+  @override
+  String get pleaseEnterPassword => 'Please enter password';
+
+  @override
+  String get pleaseEnterFullName => 'Please enter full name';
+
+  @override
+  String get pleaseEnterPhoneNumber => 'Please enter phone number';
 }

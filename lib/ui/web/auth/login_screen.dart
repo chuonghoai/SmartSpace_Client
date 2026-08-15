@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:smartspace_client/routes/router_path.dart';
 import 'package:smartspace_client/features/auth/controller/login_controller.dart';
 import 'package:smartspace_client/l10n/app_localizations.dart';
 import '../../shared/login_setting/login_setting.dart';
@@ -274,7 +276,7 @@ class _WebLoginScreenState extends State<WebLoginScreen> {
                                   ),
                                   TextButton(
                                     onPressed: () {
-                                      // TODO: Navigate to Sign Up
+                                      context.push(RouterPath.registerEmail);
                                     },
                                     child: Text(
                                       l10n.signUp,

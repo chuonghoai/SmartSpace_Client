@@ -1,21 +1,19 @@
-import 'dart:io';
-import 'package:flutter/foundation.dart'; // for kIsWeb
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smartspace_client/features/auth/controller/register_controller.dart';
 import 'package:smartspace_client/l10n/app_localizations.dart';
+import 'package:smartspace_client/ui/shared/login_setting/login_setting.dart';
 
-class WebCompleteProfileScreen extends StatefulWidget {
-  const WebCompleteProfileScreen({super.key});
+class WebRegisterOtpScreen extends StatefulWidget {
+  const WebRegisterOtpScreen({super.key});
 
   @override
-  State<WebCompleteProfileScreen> createState() => _WebCompleteProfileScreenState();
+  State<WebRegisterOtpScreen> createState() => _WebRegisterOtpScreenState();
 }
 
-class _WebCompleteProfileScreenState extends State<WebCompleteProfileScreen> {
+class _WebRegisterOtpScreenState extends State<WebRegisterOtpScreen> {
   late final RegisterController _controller;
-  final TextEditingController _fullnameController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _otpController = TextEditingController();
 
   @override
   void initState() {
@@ -25,8 +23,7 @@ class _WebCompleteProfileScreenState extends State<WebCompleteProfileScreen> {
 
   @override
   void dispose() {
-    _fullnameController.dispose();
-    _phoneController.dispose();
+    _otpController.dispose();
     super.dispose();
   }
 
@@ -39,6 +36,7 @@ class _WebCompleteProfileScreenState extends State<WebCompleteProfileScreen> {
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
+      endDrawer: const LoginSetting(),
       body: ListenableBuilder(
         listenable: _controller,
         builder: (context, _) {
@@ -59,9 +57,32 @@ class _WebCompleteProfileScreenState extends State<WebCompleteProfileScreen> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.arrow_back),
+                            onPressed: () {
+                              if (!_controller.isLoading) {
+                                context.pop();
+                              }
+                            },
+                          ),
+                          Builder(
+                            builder: (context) {
+                              return IconButton(
+                                icon: const Icon(Icons.settings),
+                                onPressed: () {
+                                  Scaffold.of(context).openEndDrawer();
+                                },
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                       const SizedBox(height: 16),
                       Text(
-                        l10n.completeProfile,
+                        l10n.registerTitle,
                         style: textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: colorScheme.primary,
@@ -70,63 +91,19 @@ class _WebCompleteProfileScreenState extends State<WebCompleteProfileScreen> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        l10n.profileTitle,
+                        l10n.otpTitle,
                         style: textTheme.bodyLarge?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 32),
-
-                      // Avatar Picker
-                      Center(
-                        child: GestureDetector(
-                          onTap: () {
-                            _controller.selectAvatar(ImageSource.gallery);
-                          },
-                          child: Stack(
-                            alignment: Alignment.bottomRight,
-                            children: [
-                              CircleAvatar(
-                                radius: 50,
-                                backgroundColor: colorScheme.surfaceContainerHighest,
-                                backgroundImage: _controller.selectedAvatarFile != null
-                                    ? (kIsWeb
-                                        ? NetworkImage(_controller.selectedAvatarFile!.path) as ImageProvider
-                                        : FileImage(File(_controller.selectedAvatarFile!.path)))
-                                    : null,
-                                child: _controller.selectedAvatarFile == null
-                                    ? Icon(
-                                        Icons.person_outline,
-                                        size: 50,
-                                        color: colorScheme.onSurfaceVariant,
-                                      )
-                                    : null,
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(4),
-                                decoration: BoxDecoration(
-                                  color: colorScheme.primary,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Icon(
-                                  Icons.camera_alt,
-                                  size: 20,
-                                  color: colorScheme.onPrimary,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
                       const SizedBox(height: 8),
-                      Center(
-                        child: Text(
-                          l10n.avatar,
-                          style: textTheme.bodySmall?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                          ),
+                      Text(
+                        '${l10n.otpSentTo}: ${_controller.email}',
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.primary,
                         ),
+                        textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 32),
 
@@ -147,38 +124,20 @@ class _WebCompleteProfileScreenState extends State<WebCompleteProfileScreen> {
                         const SizedBox(height: 16),
                       ],
 
-                      // Fullname input
+                      // OTP input
                       Text(
-                        l10n.fullname,
+                        l10n.otp,
                         style: textTheme.labelLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: 8),
                       TextField(
-                        controller: _fullnameController,
+                        controller: _otpController,
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                          hintText: l10n.fullname,
-                          prefixIcon: const Icon(Icons.person_outline),
-                        ),
-                        onChanged: (value) => _controller.clearError(),
-                      ),
-                      const SizedBox(height: 20),
-
-                      // Phone input
-                      Text(
-                        l10n.phone,
-                        style: textTheme.labelLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      TextField(
-                        controller: _phoneController,
-                        keyboardType: TextInputType.phone,
-                        decoration: InputDecoration(
-                          hintText: l10n.phone,
-                          prefixIcon: const Icon(Icons.phone_outlined),
+                          hintText: l10n.enterOtp,
+                          prefixIcon: const Icon(Icons.security),
                         ),
                         onChanged: (value) => _controller.clearError(),
                       ),
@@ -189,10 +148,9 @@ class _WebCompleteProfileScreenState extends State<WebCompleteProfileScreen> {
                         onPressed: _controller.isLoading
                             ? null
                             : () {
-                                _controller.completeProfile(
+                                _controller.verifyOtp(
                                   context: context,
-                                  fullname: _fullnameController.text,
-                                  phone: _phoneController.text,
+                                  otpInput: _otpController.text,
                                 );
                               },
                         style: ElevatedButton.styleFrom(
@@ -205,7 +163,7 @@ class _WebCompleteProfileScreenState extends State<WebCompleteProfileScreen> {
                                 child: CircularProgressIndicator(strokeWidth: 2),
                               )
                             : Text(
-                                l10n.continueText,
+                                l10n.verify,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
