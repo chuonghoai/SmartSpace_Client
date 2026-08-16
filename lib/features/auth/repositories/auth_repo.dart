@@ -16,4 +16,8 @@ abstract class AuthRepo {
 
   Future<ApiResponse<void>> logout();
   Future<ApiResponse<TokenModel>> refreshToken(String refreshToken);
+
+  // Quên mật khẩu
+  Future<ApiResponse<void>> sendOtpForgotPassword(String email);
+  Future<ApiResponse<void>> resetPassword(String email, String otp, String newPassword, String confirmPassword);
 }

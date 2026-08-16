@@ -196,4 +196,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pleaseEnterPhoneNumber => 'Please enter phone number';
+
+  @override
+  String get send => 'Send';
+
+  @override
+  String get resetPassword => 'Reset Password';
+
+  @override
+  String get newPassword => 'New Password';
+
+  @override
+  String get otpSentSuccessfully => 'OTP sent successfully';
+
+  @override
+  String get passwordResetSuccessfully => 'Password reset successfully';
+
+  @override
+  String get forgotPasswordTitle => 'Forgot Password';
+
+  @override
+  String get forgotPasswordSubtitle => 'Enter your email to receive an OTP';
+
+  @override
+  String get pleaseEnterConfirmPassword => 'Please enter confirm password';
 }

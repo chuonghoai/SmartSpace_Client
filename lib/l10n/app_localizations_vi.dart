@@ -196,4 +196,28 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get pleaseEnterPhoneNumber => 'Vui lòng nhập số điện thoại';
+
+  @override
+  String get send => 'Gửi';
+
+  @override
+  String get resetPassword => 'Đặt lại mật khẩu';
+
+  @override
+  String get newPassword => 'Mật khẩu mới';
+
+  @override
+  String get otpSentSuccessfully => 'Gửi mã OTP thành công';
+
+  @override
+  String get passwordResetSuccessfully => 'Đặt lại mật khẩu thành công';
+
+  @override
+  String get forgotPasswordTitle => 'Quên mật khẩu';
+
+  @override
+  String get forgotPasswordSubtitle => 'Nhập email của bạn để nhận mã OTP';
+
+  @override
+  String get pleaseEnterConfirmPassword => 'Vui lòng xác nhận mật khẩu';
 }

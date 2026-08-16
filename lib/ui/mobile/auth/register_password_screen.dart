@@ -16,6 +16,9 @@ class _MobileRegisterPasswordScreenState extends State<MobileRegisterPasswordScr
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
 
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
+
   @override
   void initState() {
     super.initState();
@@ -119,10 +122,20 @@ class _MobileRegisterPasswordScreenState extends State<MobileRegisterPasswordScr
                   const SizedBox(height: 8),
                   TextField(
                     controller: _passwordController,
-                    obscureText: true,
+                    obscureText: _obscurePassword,
                     decoration: InputDecoration(
                       hintText: l10n.enterPassword,
                       prefixIcon: const Icon(Icons.lock_outline),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscurePassword = !_obscurePassword;
+                          });
+                        },
+                      ),
                     ),
                     onChanged: (value) => _controller.clearError(),
                   ),
@@ -138,10 +151,20 @@ class _MobileRegisterPasswordScreenState extends State<MobileRegisterPasswordScr
                   const SizedBox(height: 8),
                   TextField(
                     controller: _confirmPasswordController,
-                    obscureText: true,
+                    obscureText: _obscureConfirmPassword,
                     decoration: InputDecoration(
                       hintText: l10n.confirmPassword,
                       prefixIcon: const Icon(Icons.lock_outline),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscureConfirmPassword = !_obscureConfirmPassword;
+                          });
+                        },
+                      ),
                     ),
                     onChanged: (value) => _controller.clearError(),
                   ),

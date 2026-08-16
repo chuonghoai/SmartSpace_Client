@@ -18,6 +18,9 @@ class _WebRegisterPasswordScreenState extends State<WebRegisterPasswordScreen> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
+
   @override
   void initState() {
     super.initState();
@@ -94,8 +97,20 @@ class _WebRegisterPasswordScreenState extends State<WebRegisterPasswordScreen> {
               const SizedBox(height: 8),
               TextField(
                 controller: _passwordController,
-                obscureText: true,
-                decoration: InputDecoration(hintText: l10n.enterPassword),
+                obscureText: _obscurePassword,
+                decoration: InputDecoration(
+                  hintText: l10n.enterPassword,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscurePassword = !_obscurePassword;
+                      });
+                    },
+                  ),
+                ),
                 onChanged: (value) => _controller.clearError(),
               ),
               const SizedBox(height: 20),
@@ -110,8 +125,20 @@ class _WebRegisterPasswordScreenState extends State<WebRegisterPasswordScreen> {
               const SizedBox(height: 8),
               TextField(
                 controller: _confirmPasswordController,
-                obscureText: true,
-                decoration: InputDecoration(hintText: l10n.confirmPassword),
+                obscureText: _obscureConfirmPassword,
+                decoration: InputDecoration(
+                  hintText: l10n.confirmPassword,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscureConfirmPassword = !_obscureConfirmPassword;
+                      });
+                    },
+                  ),
+                ),
                 onChanged: (value) => _controller.clearError(),
               ),
               const SizedBox(height: 32),

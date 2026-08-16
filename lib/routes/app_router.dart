@@ -8,6 +8,7 @@ import 'package:smartspace_client/ui/responsive/screens/auth/complete_profile_sc
 import 'package:smartspace_client/ui/responsive/screens/auth/register_email_screen.dart';
 import 'package:smartspace_client/ui/responsive/screens/auth/register_otp_screen.dart';
 import 'package:smartspace_client/ui/responsive/screens/auth/register_password_screen.dart';
+import 'package:smartspace_client/ui/responsive/screens/auth/forgot_password_screen.dart';
 
 final appRouter = GoRouter(
   initialLocation: RouterPath.splash,
@@ -39,6 +40,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: RouterPath.completeProfile,
       builder: (context, state) => const CompleteProfileScreen(),
+    ),
+    GoRoute(
+      path: RouterPath.forgotPassword,
+      builder: (context, state) => const ForgotPasswordScreen(),
     ),
   ],
 );

@@ -120,4 +120,30 @@ class AuthRepoMock implements AuthRepo {
       ),
     );
   }
+
+  // Forgot password
+  @override
+  Future<ApiResponse<void>> sendOtpForgotPassword(String email) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return ApiResponse(
+      success: true,
+      message: 'gửi otp thành công',
+      data: null,
+    );
+  }
+
+  @override
+  Future<ApiResponse<void>> resetPassword(
+    String email,
+    String otp,
+    String newPassword,
+    String confirmPassword,
+  ) async {
+    await Future.delayed(Duration(milliseconds: 500));
+    return ApiResponse(
+      success: true,
+      message: 'Đặt lại mật khẩu thành công, vui lòng đăng nhập lại',
+      data: null,
+    );
+  }
 }

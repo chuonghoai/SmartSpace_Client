@@ -6,4 +6,5 @@ class RouterPath {
   static const String registerPassword = '/register-password';
   static const String home = '/home';
   static const String completeProfile = '/complete-profile';
+  static const String forgotPassword = '/forgot-password';
 }

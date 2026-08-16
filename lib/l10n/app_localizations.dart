@@ -475,6 +475,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please enter phone number'**
   String get pleaseEnterPhoneNumber;
+
+  /// No description provided for @send.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get send;
+
+  /// No description provided for @resetPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get resetPassword;
+
+  /// No description provided for @newPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get newPassword;
+
+  /// No description provided for @otpSentSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'OTP sent successfully'**
+  String get otpSentSuccessfully;
+
+  /// No description provided for @passwordResetSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset successfully'**
+  String get passwordResetSuccessfully;
+
+  /// No description provided for @forgotPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password'**
+  String get forgotPasswordTitle;
+
+  /// No description provided for @forgotPasswordSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email to receive an OTP'**
+  String get forgotPasswordSubtitle;
+
+  /// No description provided for @pleaseEnterConfirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter confirm password'**
+  String get pleaseEnterConfirmPassword;
 }
 
 class _AppLocalizationsDelegate

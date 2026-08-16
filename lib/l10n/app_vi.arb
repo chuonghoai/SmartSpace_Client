@@ -63,5 +63,13 @@
   "pleaseEnterPassword": "Vui lòng nhập mật khẩu",
   "passwordsDoNotMatch": "Mật khẩu không khớp",
   "pleaseEnterFullName": "Vui lòng nhập họ tên",
-  "pleaseEnterPhoneNumber": "Vui lòng nhập số điện thoại"
+  "pleaseEnterPhoneNumber": "Vui lòng nhập số điện thoại",
+  "send": "Gửi",
+  "resetPassword": "Đặt lại mật khẩu",
+  "newPassword": "Mật khẩu mới",
+  "otpSentSuccessfully": "Gửi mã OTP thành công",
+  "passwordResetSuccessfully": "Đặt lại mật khẩu thành công",
+  "forgotPasswordTitle": "Quên mật khẩu",
+  "forgotPasswordSubtitle": "Nhập email của bạn để nhận mã OTP",
+  "pleaseEnterConfirmPassword": "Vui lòng xác nhận mật khẩu"
 }

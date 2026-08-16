@@ -17,6 +17,7 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _rememberMe = false;
+  bool _obscurePassword = true;
 
   @override
   void initState() {
@@ -153,8 +154,20 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
                     const SizedBox(height: 8),
                     TextField(
                       controller: _passwordController,
-                      obscureText: true,
-                      decoration: InputDecoration(hintText: l10n.password),
+                      obscureText: _obscurePassword,
+                      decoration: InputDecoration(
+                        hintText: l10n.password,
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscurePassword = !_obscurePassword;
+                            });
+                          },
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 8),
 
@@ -183,7 +196,7 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
                         // Forgot password
                         TextButton(
                           onPressed: () {
-                            // TODO: Implement forgot password
+                            context.push(RouterPath.forgotPassword);
                           },
                           child: Text(
                             l10n.forgotPassword,

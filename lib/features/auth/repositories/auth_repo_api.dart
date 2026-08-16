@@ -82,4 +82,28 @@ class AuthRepoApi implements AuthRepo {
       decoder: (json) => UserModel.fromJson(json),
     );
   }
+
+  // Forgot password
+  @override
+  Future<ApiResponse<void>> sendOtpForgotPassword(String email) async {
+    return await apiClient.post<void>('/auth/send-otp-forgot-password', data: {'email': email});
+  }
+
+  @override
+  Future<ApiResponse<void>> resetPassword(
+    String email,
+    String otp,
+    String newPassword,
+    String confirmPassword,
+  ) async {
+    return await apiClient.post<void>(
+      '/auth/reset-password',
+      data: {
+        'email': email,
+        'otp': otp,
+        'new_password': newPassword,
+        'confirm_password': confirmPassword,
+      },
+    );
+  }
 }
