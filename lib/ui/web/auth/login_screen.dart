@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smartspace_client/routes/router_path.dart';
-import 'package:smartspace_client/features/auth/controller/login_controller.dart';
+import 'package:smartspace_client/ui/mobile/auth/login/login_controller.dart';
 import 'package:smartspace_client/l10n/app_localizations.dart';
 import 'components/web_auth_layout.dart';
 

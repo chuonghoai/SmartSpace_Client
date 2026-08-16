@@ -220,4 +220,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pleaseEnterConfirmPassword => 'Please enter confirm password';
+
+  @override
+  String get search => 'Search';
+
+  @override
+  String get createReport => 'Create report';
+
+  @override
+  String get subTitleCreateReport => 'Report security and environmental issues';
+
+  @override
+  String get myReports => 'My reports';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get help => 'Help';
+
+  @override
+  String get aboutApp => 'About app';
+
+  @override
+  String get home => 'Home';
+
+  @override
+  String get recentReports => 'Recent reports';
+
+  @override
+  String get noReportsYet => 'No reports yet';
+
+  @override
+  String get user => 'User';
+
+  @override
+  String get logout => 'Log out';
 }

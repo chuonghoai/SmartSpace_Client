@@ -1,17 +1,19 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:smartspace_client/features/auth/controller/register_controller.dart';
+import 'package:smartspace_client/ui/mobile/auth/register/register_controller.dart';
 import 'package:smartspace_client/l10n/app_localizations.dart';
 
 class MobileCompleteProfileScreen extends StatefulWidget {
   const MobileCompleteProfileScreen({super.key});
 
   @override
-  State<MobileCompleteProfileScreen> createState() => _MobileCompleteProfileScreenState();
+  State<MobileCompleteProfileScreen> createState() =>
+      _MobileCompleteProfileScreenState();
 }
 
-class _MobileCompleteProfileScreenState extends State<MobileCompleteProfileScreen> {
+class _MobileCompleteProfileScreenState
+    extends State<MobileCompleteProfileScreen> {
   late final RegisterController _controller;
   final TextEditingController _fullnameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
@@ -87,9 +89,13 @@ class _MobileCompleteProfileScreenState extends State<MobileCompleteProfileScree
                         children: [
                           CircleAvatar(
                             radius: 50,
-                            backgroundColor: colorScheme.surfaceContainerHighest,
-                            backgroundImage: _controller.selectedAvatarFile != null
-                                ? FileImage(File(_controller.selectedAvatarFile!.path))
+                            backgroundColor:
+                                colorScheme.surfaceContainerHighest,
+                            backgroundImage:
+                                _controller.selectedAvatarFile != null
+                                ? FileImage(
+                                    File(_controller.selectedAvatarFile!.path),
+                                  )
                                 : null,
                             child: _controller.selectedAvatarFile == null
                                 ? Icon(

@@ -39,3 +39,13 @@ Tuyệt đối **KHÔNG** sử dụng `FocusScope.of(context).nextFocus()` một
 - **Web Behavior**:
   - Không được lạm dụng hành vi chuyển focus `requestFocus()` của Mobile lên cho Web nếu nó làm hỏng Tab order mặc định của accessibility. Hãy giữ nguyên `FocusNode` nhưng có thể không cần ép `requestFocus()` khi nhấn phím Enter trên field giữa.
   - Hành vi chuẩn khi nhấn phím `Enter` trên Web form là **Submit form**. Ở tất cả các field trên màn hình Web, cấu hình `onSubmitted` gọi đến logic submit để mô phỏng chính xác HTML form (ví dụ form Đăng nhập nhấn Enter ở field Email vẫn sẽ gọi hàm Login).
+
+### 4. Image Rendering
+Tuyệt đối **không** sử dụng trực tiếp các class như `Image.network`, `CircleAvatar(backgroundImage: ...)` hay viết lại các logic xử lý trạng thái loading/error/fallback của ảnh network rải rác khắp các file UI.
+
+- Bắt buộc phải tái sử dụng component `AppNetworkImage` tại `lib/ui/shared/image/app_network_image.dart` cho mọi nhu cầu render ảnh từ internet.
+- `AppNetworkImage` đã được cấu hình sẵn các rule:
+  - Tự động fallback về icon/màu mặc định an toàn.
+  - Xử lý trạng thái loading mượt mà bằng `CircularProgressIndicator`.
+  - Có các param như `isCircle`, `borderRadius`, `width`, `height` để tự động render bo góc tương ứng.
+  - Chèn header `User-Agent` mặc định để vượt qua các rào cản CDN (ví dụ như Cloudflare đối với api `ui-avatars.com`).

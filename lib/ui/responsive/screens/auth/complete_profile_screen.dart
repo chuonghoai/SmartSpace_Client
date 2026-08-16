@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smartspace_client/ui/mobile/auth/complete_profile_screen.dart';
+import 'package:smartspace_client/ui/mobile/auth/register/complete_profile_screen.dart';
 import 'package:smartspace_client/ui/responsive/responsive_layout.dart';
 import 'package:smartspace_client/ui/web/auth/complete_profile_screen.dart';
 

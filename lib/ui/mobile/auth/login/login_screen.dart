@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smartspace_client/routes/router_path.dart';
-import 'package:smartspace_client/features/auth/controller/login_controller.dart';
+import 'package:smartspace_client/ui/mobile/auth/login/login_controller.dart';
 import 'package:smartspace_client/l10n/app_localizations.dart';
-import '../../shared/login_setting/login_setting.dart';
+import '../../../shared/login_setting/login_setting.dart';
 
 class MobileLoginScreen extends StatefulWidget {
   const MobileLoginScreen({super.key});
@@ -147,9 +147,7 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
                       onSubmitted: (_) => _passwordFocusNode.requestFocus(),
-                      decoration: InputDecoration(
-                        hintText: l10n.email,
-                      ),
+                      decoration: InputDecoration(hintText: l10n.email),
                     ),
                     const SizedBox(height: 20),
 
@@ -180,7 +178,9 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
                         hintText: l10n.password,
                         suffixIcon: IconButton(
                           icon: Icon(
-                            _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                            _obscurePassword
+                                ? Icons.visibility_off
+                                : Icons.visibility,
                           ),
                           onPressed: () {
                             setState(() {

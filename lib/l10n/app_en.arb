@@ -71,5 +71,17 @@
   "passwordResetSuccessfully": "Password reset successfully",
   "forgotPasswordTitle": "Forgot Password",
   "forgotPasswordSubtitle": "Enter your email to receive an OTP",
-  "pleaseEnterConfirmPassword": "Please enter confirm password"
+  "pleaseEnterConfirmPassword": "Please enter confirm password",
+  "search": "Search",
+  "createReport": "Create report",
+  "subTitleCreateReport": "Report security and environmental issues",
+  "myReports": "My reports",
+  "notifications": "Notifications",
+  "help": "Help",
+  "aboutApp": "About app",
+  "home": "Home",
+  "recentReports": "Recent reports",
+  "noReportsYet": "No reports yet",
+  "user": "User",
+  "logout": "Log out"
 }

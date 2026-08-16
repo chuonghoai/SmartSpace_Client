@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:smartspace_client/features/auth/controller/forgot_password_controller.dart';
+import 'package:smartspace_client/ui/mobile/auth/forgot_password/forgot_password_controller.dart';
 import 'package:smartspace_client/l10n/app_localizations.dart';
-import '../../shared/login_setting/login_setting.dart';
+import '../../../shared/login_setting/login_setting.dart';
 
 class MobileForgotPasswordScreen extends StatefulWidget {
   const MobileForgotPasswordScreen({super.key});
 
   @override
-  State<MobileForgotPasswordScreen> createState() => _MobileForgotPasswordScreenState();
+  State<MobileForgotPasswordScreen> createState() =>
+      _MobileForgotPasswordScreenState();
 }
 
-class _MobileForgotPasswordScreenState extends State<MobileForgotPasswordScreen> {
+class _MobileForgotPasswordScreenState
+    extends State<MobileForgotPasswordScreen> {
   late final ForgotPasswordController _controller;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _otpController = TextEditingController();
   final TextEditingController _newPasswordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
-  
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _otpFocusNode = FocusNode();
   final FocusNode _newPasswordFocusNode = FocusNode();
@@ -160,22 +163,25 @@ class _MobileForgotPasswordScreenState extends State<MobileForgotPasswordScreen>
                             keyboardType: TextInputType.emailAddress,
                             textInputAction: TextInputAction.done,
                             onSubmitted: (_) {
-                              if (!_controller.isSendingOtp && !_controller.isResettingPassword) {
+                              if (!_controller.isSendingOtp &&
+                                  !_controller.isResettingPassword) {
                                 _controller.sendOtp(
                                   context: context,
                                   email: _emailController.text,
                                 );
                               }
                             },
-                            decoration: InputDecoration(
-                              hintText: l10n.email,
-                            ),
-                            enabled: !_controller.isSendingOtp && !_controller.isResettingPassword,
+                            decoration: InputDecoration(hintText: l10n.email),
+                            enabled:
+                                !_controller.isSendingOtp &&
+                                !_controller.isResettingPassword,
                           ),
                         ),
                         const SizedBox(width: 8),
                         ElevatedButton(
-                          onPressed: _controller.isSendingOtp || _controller.isResettingPassword
+                          onPressed:
+                              _controller.isSendingOtp ||
+                                  _controller.isResettingPassword
                               ? null
                               : () {
                                   _controller.sendOtp(
@@ -184,13 +190,18 @@ class _MobileForgotPasswordScreenState extends State<MobileForgotPasswordScreen>
                                   );
                                 },
                           style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 16,
+                            ),
                           ),
                           child: _controller.isSendingOtp
                               ? const SizedBox(
                                   width: 20,
                                   height: 20,
-                                  child: CircularProgressIndicator(strokeWidth: 2),
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                  ),
                                 )
                               : Text(l10n.send),
                         ),
@@ -213,7 +224,9 @@ class _MobileForgotPasswordScreenState extends State<MobileForgotPasswordScreen>
                       textInputAction: TextInputAction.next,
                       onSubmitted: (_) => _newPasswordFocusNode.requestFocus(),
                       decoration: InputDecoration(hintText: l10n.enterOtp),
-                      enabled: _controller.otpSent && !_controller.isResettingPassword,
+                      enabled:
+                          _controller.otpSent &&
+                          !_controller.isResettingPassword,
                     ),
                     const SizedBox(height: 20),
 
@@ -230,12 +243,15 @@ class _MobileForgotPasswordScreenState extends State<MobileForgotPasswordScreen>
                       focusNode: _newPasswordFocusNode,
                       obscureText: _obscureNewPassword,
                       textInputAction: TextInputAction.next,
-                      onSubmitted: (_) => _confirmPasswordFocusNode.requestFocus(),
+                      onSubmitted: (_) =>
+                          _confirmPasswordFocusNode.requestFocus(),
                       decoration: InputDecoration(
                         hintText: l10n.enterPassword,
                         suffixIcon: IconButton(
                           icon: Icon(
-                            _obscureNewPassword ? Icons.visibility_off : Icons.visibility,
+                            _obscureNewPassword
+                                ? Icons.visibility_off
+                                : Icons.visibility,
                           ),
                           onPressed: () {
                             setState(() {
@@ -244,10 +260,12 @@ class _MobileForgotPasswordScreenState extends State<MobileForgotPasswordScreen>
                           },
                         ),
                       ),
-                      enabled: _controller.otpSent && !_controller.isResettingPassword,
+                      enabled:
+                          _controller.otpSent &&
+                          !_controller.isResettingPassword,
                     ),
                     const SizedBox(height: 20),
-                    
+
                     // Confirm Password input
                     Text(
                       l10n.confirmPassword,
@@ -262,7 +280,8 @@ class _MobileForgotPasswordScreenState extends State<MobileForgotPasswordScreen>
                       obscureText: _obscureConfirmPassword,
                       textInputAction: TextInputAction.done,
                       onSubmitted: (_) {
-                        if (!_controller.isResettingPassword && _controller.otpSent) {
+                        if (!_controller.isResettingPassword &&
+                            _controller.otpSent) {
                           _controller.resetPassword(
                             context: context,
                             email: _emailController.text,
@@ -276,22 +295,29 @@ class _MobileForgotPasswordScreenState extends State<MobileForgotPasswordScreen>
                         hintText: l10n.confirmPassword,
                         suffixIcon: IconButton(
                           icon: Icon(
-                            _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
+                            _obscureConfirmPassword
+                                ? Icons.visibility_off
+                                : Icons.visibility,
                           ),
                           onPressed: () {
                             setState(() {
-                              _obscureConfirmPassword = !_obscureConfirmPassword;
+                              _obscureConfirmPassword =
+                                  !_obscureConfirmPassword;
                             });
                           },
                         ),
                       ),
-                      enabled: _controller.otpSent && !_controller.isResettingPassword,
+                      enabled:
+                          _controller.otpSent &&
+                          !_controller.isResettingPassword,
                     ),
                     const SizedBox(height: 32),
 
                     // Reset Password button
                     ElevatedButton(
-                      onPressed: (_controller.isResettingPassword || !_controller.otpSent)
+                      onPressed:
+                          (_controller.isResettingPassword ||
+                              !_controller.otpSent)
                           ? null
                           : () {
                               _controller.resetPassword(
@@ -299,7 +325,8 @@ class _MobileForgotPasswordScreenState extends State<MobileForgotPasswordScreen>
                                 email: _emailController.text,
                                 otp: _otpController.text,
                                 newPassword: _newPasswordController.text,
-                                confirmPassword: _confirmPasswordController.text,
+                                confirmPassword:
+                                    _confirmPasswordController.text,
                               );
                             },
                       style: ElevatedButton.styleFrom(

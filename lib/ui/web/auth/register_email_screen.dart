@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:smartspace_client/features/auth/controller/register_controller.dart';
+import 'package:smartspace_client/ui/mobile/auth/register/register_controller.dart';
 import 'package:smartspace_client/l10n/app_localizations.dart';
 import 'components/web_auth_layout.dart';
 

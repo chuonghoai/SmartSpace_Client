@@ -61,7 +61,7 @@ class SplashController extends ChangeNotifier {
       }
 
       // AT, RT invalid && user valid -> logout -> /login
-      if (user != null && user.isNotEmpty) {
+      if (user != null) {
         await authService.logout();
         if (!context.mounted) return;
         ErrorInterceptor.unauthenticatedStream.add('expired');

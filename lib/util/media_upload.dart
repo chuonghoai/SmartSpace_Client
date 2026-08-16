@@ -11,7 +11,7 @@ class MediaUploadUtil {
 
   Future<String> uploadMedia(File file) async {
     await Future.delayed(const Duration(seconds: 2));
-    return 'https://ui-avatars.com/api/?name=TH';
+    return 'https://ui-avatars.com/api/?name=TH&format=png';
   }
 }
 

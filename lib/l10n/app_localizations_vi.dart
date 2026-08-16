@@ -220,4 +220,40 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get pleaseEnterConfirmPassword => 'Vui lòng xác nhận mật khẩu';
+
+  @override
+  String get search => 'Tìm kiếm';
+
+  @override
+  String get createReport => 'Tạo phản ánh';
+
+  @override
+  String get subTitleCreateReport => 'Báo cáo vấn đề an ninh, môi trường';
+
+  @override
+  String get myReports => 'Phản ánh của tôi';
+
+  @override
+  String get notifications => 'Thông báo';
+
+  @override
+  String get help => 'Trợ giúp';
+
+  @override
+  String get aboutApp => 'Về ứng dụng';
+
+  @override
+  String get home => 'Trang chủ';
+
+  @override
+  String get recentReports => 'Phản ánh gần đây';
+
+  @override
+  String get noReportsYet => 'Chưa có phản ánh nào';
+
+  @override
+  String get user => 'Người dùng';
+
+  @override
+  String get logout => 'Đăng xuất';
 }

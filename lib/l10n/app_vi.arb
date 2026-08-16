@@ -71,5 +71,17 @@
   "passwordResetSuccessfully": "Đặt lại mật khẩu thành công",
   "forgotPasswordTitle": "Quên mật khẩu",
   "forgotPasswordSubtitle": "Nhập email của bạn để nhận mã OTP",
-  "pleaseEnterConfirmPassword": "Vui lòng xác nhận mật khẩu"
+  "pleaseEnterConfirmPassword": "Vui lòng xác nhận mật khẩu",
+  "search": "Tìm kiếm",
+  "createReport": "Tạo phản ánh",
+  "subTitleCreateReport": "Báo cáo vấn đề an ninh, môi trường",
+  "myReports": "Phản ánh của tôi",
+  "notifications": "Thông báo",
+  "help": "Trợ giúp",
+  "aboutApp": "Về ứng dụng",
+  "home": "Trang chủ",
+  "recentReports": "Phản ánh gần đây",
+  "noReportsYet": "Chưa có phản ánh nào",
+  "user": "Người dùng",
+  "logout": "Đăng xuất"
 }

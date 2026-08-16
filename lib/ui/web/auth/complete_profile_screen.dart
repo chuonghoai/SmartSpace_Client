@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart'; // for kIsWeb
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:smartspace_client/features/auth/controller/register_controller.dart';
+import 'package:smartspace_client/ui/mobile/auth/register/register_controller.dart';
 import 'package:smartspace_client/l10n/app_localizations.dart';
 import 'components/web_auth_layout.dart';
 
