@@ -18,6 +18,8 @@ class _MobileRegisterPasswordScreenState extends State<MobileRegisterPasswordScr
 
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
+  final FocusNode _passwordFocusNode = FocusNode();
+  final FocusNode _confirmPasswordFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -29,6 +31,8 @@ class _MobileRegisterPasswordScreenState extends State<MobileRegisterPasswordScr
   void dispose() {
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _passwordFocusNode.dispose();
+    _confirmPasswordFocusNode.dispose();
     super.dispose();
   }
 
@@ -122,7 +126,10 @@ class _MobileRegisterPasswordScreenState extends State<MobileRegisterPasswordScr
                   const SizedBox(height: 8),
                   TextField(
                     controller: _passwordController,
+                    focusNode: _passwordFocusNode,
                     obscureText: _obscurePassword,
+                    textInputAction: TextInputAction.next,
+                    onSubmitted: (_) => _confirmPasswordFocusNode.requestFocus(),
                     decoration: InputDecoration(
                       hintText: l10n.enterPassword,
                       prefixIcon: const Icon(Icons.lock_outline),
@@ -151,7 +158,18 @@ class _MobileRegisterPasswordScreenState extends State<MobileRegisterPasswordScr
                   const SizedBox(height: 8),
                   TextField(
                     controller: _confirmPasswordController,
+                    focusNode: _confirmPasswordFocusNode,
                     obscureText: _obscureConfirmPassword,
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: (_) {
+                      if (!_controller.isLoading) {
+                        _controller.registerAccount(
+                          context: context,
+                          password: _passwordController.text,
+                          confirmPassword: _confirmPasswordController.text,
+                        );
+                      }
+                    },
                     decoration: InputDecoration(
                       hintText: l10n.confirmPassword,
                       prefixIcon: const Icon(Icons.lock_outline),

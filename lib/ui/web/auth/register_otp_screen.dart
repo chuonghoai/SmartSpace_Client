@@ -100,6 +100,15 @@ class _WebRegisterOtpScreenState extends State<WebRegisterOtpScreen> {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(hintText: l10n.enterOtp),
                 onChanged: (value) => _controller.clearError(),
+                textInputAction: TextInputAction.done,
+                onSubmitted: (_) {
+                  if (!_controller.isLoading) {
+                    _controller.verifyOtp(
+                      context: context,
+                      otpInput: _otpController.text,
+                    );
+                  }
+                },
               ),
               const SizedBox(height: 32),
 

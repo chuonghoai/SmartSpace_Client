@@ -94,6 +94,15 @@ class _WebRegisterEmailScreenState extends State<WebRegisterEmailScreen> {
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(hintText: l10n.enterEmail),
                 onChanged: (value) => _controller.clearError(),
+                textInputAction: TextInputAction.done,
+                onSubmitted: (_) {
+                  if (!_controller.isLoading) {
+                    _controller.sendOtp(
+                      context: context,
+                      emailInput: _emailController.text,
+                    );
+                  }
+                },
               ),
               const SizedBox(height: 32),
 

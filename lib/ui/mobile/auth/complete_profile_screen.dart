@@ -15,6 +15,8 @@ class _MobileCompleteProfileScreenState extends State<MobileCompleteProfileScree
   late final RegisterController _controller;
   final TextEditingController _fullnameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
+  final FocusNode _fullnameFocusNode = FocusNode();
+  final FocusNode _phoneFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -26,6 +28,8 @@ class _MobileCompleteProfileScreenState extends State<MobileCompleteProfileScree
   void dispose() {
     _fullnameController.dispose();
     _phoneController.dispose();
+    _fullnameFocusNode.dispose();
+    _phoneFocusNode.dispose();
     super.dispose();
   }
 
@@ -149,6 +153,9 @@ class _MobileCompleteProfileScreenState extends State<MobileCompleteProfileScree
                   const SizedBox(height: 8),
                   TextField(
                     controller: _fullnameController,
+                    focusNode: _fullnameFocusNode,
+                    textInputAction: TextInputAction.next,
+                    onSubmitted: (_) => _phoneFocusNode.requestFocus(),
                     decoration: InputDecoration(
                       hintText: l10n.fullname,
                       prefixIcon: const Icon(Icons.person_outline),
@@ -167,7 +174,18 @@ class _MobileCompleteProfileScreenState extends State<MobileCompleteProfileScree
                   const SizedBox(height: 8),
                   TextField(
                     controller: _phoneController,
+                    focusNode: _phoneFocusNode,
                     keyboardType: TextInputType.phone,
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: (_) {
+                      if (!_controller.isLoading) {
+                        _controller.completeProfile(
+                          context: context,
+                          fullname: _fullnameController.text,
+                          phone: _phoneController.text,
+                        );
+                      }
+                    },
                     decoration: InputDecoration(
                       hintText: l10n.phone,
                       prefixIcon: const Icon(Icons.phone_outlined),

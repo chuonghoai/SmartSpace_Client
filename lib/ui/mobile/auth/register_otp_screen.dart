@@ -8,7 +8,8 @@ class MobileRegisterOtpScreen extends StatefulWidget {
   const MobileRegisterOtpScreen({super.key});
 
   @override
-  State<MobileRegisterOtpScreen> createState() => _MobileRegisterOtpScreenState();
+  State<MobileRegisterOtpScreen> createState() =>
+      _MobileRegisterOtpScreenState();
 }
 
 class _MobileRegisterOtpScreenState extends State<MobileRegisterOtpScreen> {
@@ -130,6 +131,15 @@ class _MobileRegisterOtpScreenState extends State<MobileRegisterOtpScreen> {
                       prefixIcon: const Icon(Icons.security),
                     ),
                     onChanged: (value) => _controller.clearError(),
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: (_) {
+                      if (!_controller.isLoading) {
+                        _controller.verifyOtp(
+                          context: context,
+                          otpInput: _otpController.text,
+                        );
+                      }
+                    },
                   ),
                   const SizedBox(height: 32),
 

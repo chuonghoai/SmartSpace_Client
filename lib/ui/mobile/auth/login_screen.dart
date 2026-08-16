@@ -16,6 +16,8 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
   late final LoginController _controller;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
   bool _rememberMe = false;
   bool _obscurePassword = true;
 
@@ -30,6 +32,8 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
     _controller.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _emailFocusNode.dispose();
+    _passwordFocusNode.dispose();
     super.dispose();
   }
 
@@ -139,8 +143,13 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
                     const SizedBox(height: 8),
                     TextField(
                       controller: _emailController,
+                      focusNode: _emailFocusNode,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(hintText: l10n.email),
+                      textInputAction: TextInputAction.next,
+                      onSubmitted: (_) => _passwordFocusNode.requestFocus(),
+                      decoration: InputDecoration(
+                        hintText: l10n.email,
+                      ),
                     ),
                     const SizedBox(height: 20),
 
@@ -154,7 +163,19 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
                     const SizedBox(height: 8),
                     TextField(
                       controller: _passwordController,
+                      focusNode: _passwordFocusNode,
                       obscureText: _obscurePassword,
+                      textInputAction: TextInputAction.done,
+                      onSubmitted: (_) {
+                        if (!_controller.isLoading) {
+                          _controller.login(
+                            context: context,
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                            rememberMe: _rememberMe,
+                          );
+                        }
+                      },
                       decoration: InputDecoration(
                         hintText: l10n.password,
                         suffixIcon: IconButton(

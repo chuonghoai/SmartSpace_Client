@@ -8,7 +8,8 @@ class MobileRegisterEmailScreen extends StatefulWidget {
   const MobileRegisterEmailScreen({super.key});
 
   @override
-  State<MobileRegisterEmailScreen> createState() => _MobileRegisterEmailScreenState();
+  State<MobileRegisterEmailScreen> createState() =>
+      _MobileRegisterEmailScreenState();
 }
 
 class _MobileRegisterEmailScreenState extends State<MobileRegisterEmailScreen> {
@@ -124,6 +125,15 @@ class _MobileRegisterEmailScreenState extends State<MobileRegisterEmailScreen> {
                       prefixIcon: const Icon(Icons.email_outlined),
                     ),
                     onChanged: (value) => _controller.clearError(),
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: (_) {
+                      if (!_controller.isLoading) {
+                        _controller.sendOtp(
+                          context: context,
+                          emailInput: _emailController.text,
+                        );
+                      }
+                    },
                   ),
                   const SizedBox(height: 32),
 
