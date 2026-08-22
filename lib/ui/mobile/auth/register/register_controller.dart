@@ -196,15 +196,27 @@ class RegisterController extends ChangeNotifier {
     try {
       String? avatarUrl;
 
+      debugPrint('▶ [completeProfile] START');
+      debugPrint('▶ [completeProfile] fullname: ${fullname.trim()}');
+      debugPrint('▶ [completeProfile] phone: ${phone.trim()}');
+      debugPrint('▶ [completeProfile] hasAvatar: ${_selectedAvatarFile != null}');
+
       if (_selectedAvatarFile != null) {
+        debugPrint('▶ [completeProfile] Uploading avatar...');
         avatarUrl = await _mediaUploadUtil.uploadMedia(_selectedAvatarFile!);
+        debugPrint('▶ [completeProfile] avatarUrl: $avatarUrl');
       }
 
+      debugPrint('▶ [completeProfile] Calling updateProfile API...');
       final response = await _authService.updateProfile(
         fullname.trim(),
         phone.trim(),
         avatarUrl,
       );
+      debugPrint('▶ [completeProfile] API response received');
+      debugPrint('▶ [completeProfile] success: ${response.success}');
+      debugPrint('▶ [completeProfile] message: ${response.message}');
+      debugPrint('▶ [completeProfile] data: ${response.data}');
 
       if (response.success && response.data != null) {
         if (context.mounted) {
@@ -218,7 +230,11 @@ class RegisterController extends ChangeNotifier {
               : 'Failed to update profile.',
         );
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      debugPrint('▶ [completeProfile] EXCEPTION CAUGHT');
+      debugPrint('▶ [completeProfile] error: $e');
+      debugPrint('▶ [completeProfile] errorType: ${e.runtimeType}');
+      debugPrint('▶ [completeProfile] stackTrace: $stackTrace');
       _setError(e.toString());
     } finally {
       _setLoading(false);
