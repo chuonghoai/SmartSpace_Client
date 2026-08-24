@@ -8,7 +8,8 @@ import 'package:smartspace_client/routes/router_path.dart';
 class LoginController extends ChangeNotifier {
   final AuthService _authService;
 
-  LoginController({AuthService? service}) : _authService = service ?? authService;
+  LoginController({AuthService? service})
+    : _authService = service ?? authService;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -36,19 +37,31 @@ class LoginController extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final response = await _authService.login(email.trim(), password, rememberMe);
+      final result = await _authService.login(
+        email.trim(),
+        password,
+        rememberMe,
+      );
+      final response = result.response;
+      final wsConnected = result.wsConnected;
 
       if (response.success && response.data != null) {
         final registrationStatus = response.data!.registrationStatus;
         if (context.mounted) {
           if (registrationStatus == ERegistrationStatus.completed) {
-            context.go(RouterPath.home);
+            if (wsConnected) {
+              context.go(RouterPath.home);
+            } else {
+              _error = 'Không thể kết nối real-time. Vui lòng thử lại.';
+            }
           } else {
             context.go(RouterPath.completeProfile);
           }
         }
       } else {
-        _error = response.message.isNotEmpty ? response.message : 'Login failed. Please try again.';
+        _error = response.message.isNotEmpty
+            ? response.message
+            : 'Login failed. Please try again.';
       }
     } catch (e) {
       _error = e.toString();

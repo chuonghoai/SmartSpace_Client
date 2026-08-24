@@ -3,6 +3,7 @@ import 'package:smartspace_client/core/auth/access_token_service.dart';
 import 'package:smartspace_client/core/auth/refresh_token_service.dart';
 import 'package:smartspace_client/core/auth/user_storage_service.dart';
 import 'package:smartspace_client/core/constants/use_mock.dart';
+import 'package:smartspace_client/core/websocket/websocket_service.dart';
 import 'package:smartspace_client/features/auth/models/token_model.dart';
 import 'package:smartspace_client/features/auth/repositories/auth_repo.dart';
 import 'package:smartspace_client/features/auth/repositories/auth_repo_api.dart';
@@ -14,8 +15,8 @@ class AuthService {
 
   const AuthService({required this.authRepo});
 
-  /// Login
-  Future<ApiResponse<TokenModel>> login(
+  /// Login — trả về cả response và trạng thái kết nối WebSocket
+  Future<({ApiResponse<TokenModel> response, bool wsConnected})> login(
     String email,
     String password,
     bool rememberMe,
@@ -32,16 +33,26 @@ class AuthService {
         refreshTokenService.saveRefreshToken(data.refreshToken),
         userStorageService.saveUser(data.userModel!),
       ]);
+
+      // Kết nối WebSocket ngay sau khi lưu token
+      final wsConnected = await webSocketService.connect();
+      return (response: response, wsConnected: wsConnected);
     }
 
-    return response;
+    return (response: response, wsConnected: false);
   }
 
-  Future<ApiResponse<void>> logout() {
-    accessTokenService.clear();
-    refreshTokenService.clear();
-    userStorageService.clear();
-    return authRepo.logout();
+  Future<ApiResponse<void>> logout() async {
+    // Gọi API logout
+    final response = await authRepo.logout();
+    // Xóa token
+    await Future.wait([
+      accessTokenService.clear(),
+      refreshTokenService.clear(),
+      userStorageService.clear(),
+    ]);
+    webSocketService.disconnect();
+    return response;
   }
 
   /// Refresh access token with refresh token in secured storage
@@ -103,6 +114,7 @@ class AuthService {
 
     return response;
   }
+
   /// Forgot password step 1: Send OTP to email
   Future<ApiResponse<void>> sendOtpForgotPassword(String email) async {
     return await authRepo.sendOtpForgotPassword(email);
