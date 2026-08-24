@@ -7,11 +7,13 @@ import 'core/theme/app_theme.dart';
 import 'core/theme/theme_provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:smartspace_client/core/notification/firebase_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
   await dotenv.load(fileName: ".env");
+  await FirebaseService.initialize();
   runApp(const SmartSpaceApp());
 }
 
@@ -35,10 +37,7 @@ class SmartSpaceApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          supportedLocales: const [
-            Locale('vi'),
-            Locale('en'),
-          ],
+          supportedLocales: const [Locale('vi'), Locale('en')],
           routerConfig: appRouter,
           debugShowCheckedModeBanner: false,
         );
