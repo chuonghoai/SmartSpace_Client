@@ -7,6 +7,7 @@ import 'core/theme/app_theme.dart';
 import 'core/theme/theme_provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:smartspace_client/core/notification/firebase_service.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,6 +15,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
   await dotenv.load(fileName: ".env");
+  await FirebaseService.initialize();
   runApp(const ProviderScope(child: SmartSpaceApp()));
 }
 

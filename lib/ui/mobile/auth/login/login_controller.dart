@@ -37,17 +37,23 @@ class LoginController extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final response = await _authService.login(
+      final result = await _authService.login(
         email.trim(),
         password,
         rememberMe,
       );
+      final response = result.response;
+      final wsConnected = result.wsConnected;
 
       if (response.success && response.data != null) {
         final registrationStatus = response.data!.registrationStatus;
         if (context.mounted) {
           if (registrationStatus == ERegistrationStatus.completed) {
-            context.go(RouterPath.home);
+            if (wsConnected) {
+              context.go(RouterPath.home);
+            } else {
+              _error = 'Không thể kết nối real-time. Vui lòng thử lại.';
+            }
           } else {
             context.go(RouterPath.completeProfile);
           }

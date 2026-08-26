@@ -3,6 +3,8 @@ import 'package:smartspace_client/core/auth/access_token_service.dart';
 import 'package:smartspace_client/core/auth/refresh_token_service.dart';
 import 'package:smartspace_client/core/auth/user_storage_service.dart';
 import 'package:smartspace_client/core/constants/use_mock.dart';
+import 'package:smartspace_client/core/notification/firebase_service.dart';
+import 'package:smartspace_client/core/websocket/websocket_service.dart';
 import 'package:smartspace_client/features/auth/models/token_model.dart';
 import 'package:smartspace_client/features/auth/repositories/auth_repo.dart';
 import 'package:smartspace_client/features/auth/repositories/auth_repo_api.dart';
@@ -14,8 +16,8 @@ class AuthService {
 
   const AuthService({required this.authRepo});
 
-  /// Login
-  Future<ApiResponse<TokenModel>> login(
+  /// Login — trả về cả response và trạng thái kết nối WebSocket
+  Future<({ApiResponse<TokenModel> response, bool wsConnected})> login(
     String email,
     String password,
     bool rememberMe,
@@ -30,8 +32,29 @@ class AuthService {
       await accessTokenService.saveAccessToken(data.accessToken);
       await refreshTokenService.saveRefreshToken(data.refreshToken);
       await userStorageService.saveUser(data.userModel!);
+
+      // Kết nối WebSocket ngay sau khi lưu token
+      final wsConnected = await webSocketService.connect();
+      // Lấy FCM token và đăng ký
+      FirebaseService.getAndRegisterToken().ignore();
+      return (response: response, wsConnected: wsConnected);
     }
 
+    return (response: response, wsConnected: false);
+  }
+
+  Future<ApiResponse<void>> logout() async {
+    // Gọi API logout
+    final response = await authRepo.logout();
+    // Xóa FCM token của thiết bị hiện tại
+    await FirebaseService.clearTokenOnServer();
+    // Xóa token
+    await Future.wait([
+      accessTokenService.clear(),
+      refreshTokenService.clear(),
+      userStorageService.clear(),
+    ]);
+    webSocketService.disconnect();
     return response;
   }
 
