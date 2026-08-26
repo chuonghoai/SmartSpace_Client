@@ -1,21 +1,25 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smartspace_client/core/auth/user_storage_service.dart';
 import 'package:smartspace_client/features/auth/services/auth_service.dart';
+import 'package:smartspace_client/features/notifications/providers/notification_provider.dart';
 import 'package:smartspace_client/features/profile/models/user_model.dart';
 import 'package:smartspace_client/l10n/app_localizations.dart';
 import 'package:smartspace_client/routes/router_path.dart';
 import 'package:smartspace_client/ui/shared/image/app_network_image.dart';
 
-class Sidebar extends StatelessWidget {
+class Sidebar extends ConsumerWidget {
   const Sidebar({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
+    final notificationState = ref.watch(notificationProvider);
+    final unreadCount = notificationState.countModel?.notifNumber ?? 0;
 
     return Drawer(
       child: SafeArea(
@@ -83,10 +87,36 @@ class Sidebar extends StatelessWidget {
                     icon: Icons.home_outlined,
                     label: l10n.home,
                     onTap: () {
-                      // Navigate to home
                       context.go(RouterPath.home);
                     },
                     isSelected: true,
+                  ),
+                  _SidebarItem(
+                    icon: Icons.notifications_outlined,
+                    label: l10n.notifications,
+                    trailing: unreadCount > 0
+                        ? Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: theme.colorScheme.error,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              unreadCount > 99 ? '99+' : unreadCount.toString(),
+                              style: theme.textTheme.labelSmall?.copyWith(
+                                color: theme.colorScheme.onError,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          )
+                        : null,
+                    onTap: () {
+                      Navigator.pop(context);
+                      // TODO: Navigate to Notifications
+                    },
                   ),
                   _SidebarItem(
                     icon: Icons.report_outlined,
@@ -97,11 +127,19 @@ class Sidebar extends StatelessWidget {
                     },
                   ),
                   _SidebarItem(
-                    icon: Icons.notifications_outlined,
-                    label: l10n.notifications,
+                    icon: Icons.map_outlined,
+                    label: l10n.map,
                     onTap: () {
                       Navigator.pop(context);
-                      // TODO: Navigate to Notifications
+                      // TODO: Navigate to Map
+                    },
+                  ),
+                  _SidebarItem(
+                    icon: Icons.article_outlined,
+                    label: l10n.news,
+                    onTap: () {
+                      Navigator.pop(context);
+                      // TODO: Navigate to news
                     },
                   ),
 
@@ -121,10 +159,10 @@ class Sidebar extends StatelessWidget {
                   ),
                   _SidebarItem(
                     icon: Icons.help_outline,
-                    label: l10n.help,
+                    label: l10n.instructions,
                     onTap: () {
                       Navigator.pop(context);
-                      // TODO: Navigate to Help
+                      // TODO: Navigate to instructions
                     },
                   ),
                   _SidebarItem(
@@ -171,6 +209,7 @@ class _SidebarItem extends StatelessWidget {
   final bool isSelected;
   final Color? textColor;
   final Color? iconColor;
+  final Widget? trailing;
 
   const _SidebarItem({
     required this.icon,
@@ -179,6 +218,7 @@ class _SidebarItem extends StatelessWidget {
     this.isSelected = false,
     this.textColor,
     this.iconColor,
+    this.trailing,
   });
 
   @override
@@ -202,6 +242,7 @@ class _SidebarItem extends StatelessWidget {
           fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
         ),
       ),
+      trailing: trailing,
       selected: isSelected,
       selectedTileColor: primaryColor.withOpacity(0.08),
       onTap: onTap,

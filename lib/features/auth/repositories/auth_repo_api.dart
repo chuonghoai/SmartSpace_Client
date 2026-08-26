@@ -86,7 +86,10 @@ class AuthRepoApi implements AuthRepo {
   // Forgot password
   @override
   Future<ApiResponse<void>> sendOtpForgotPassword(String email) async {
-    return await apiClient.post<void>('/auth/send-otp-forgot-password', data: {'email': email});
+    return await apiClient.post<void>(
+      '/auth/send-otp-forgot-password',
+      data: {'email': email},
+    );
   }
 
   @override

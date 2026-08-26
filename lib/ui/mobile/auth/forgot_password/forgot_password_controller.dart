@@ -4,11 +4,11 @@ import 'package:smartspace_client/features/auth/services/auth_service.dart';
 import 'package:smartspace_client/l10n/app_localizations.dart';
 import 'package:smartspace_client/routes/router_path.dart';
 
-
 class ForgotPasswordController extends ChangeNotifier {
   final AuthService _authService;
 
-  ForgotPasswordController({AuthService? service}) : _authService = service ?? authService;
+  ForgotPasswordController({AuthService? service})
+    : _authService = service ?? authService;
 
   bool _isSendingOtp = false;
   bool get isSendingOtp => _isSendingOtp;
@@ -21,7 +21,7 @@ class ForgotPasswordController extends ChangeNotifier {
 
   String? _successMessage;
   String? get successMessage => _successMessage;
-  
+
   bool _otpSent = false;
   bool get otpSent => _otpSent;
 
@@ -50,12 +50,14 @@ class ForgotPasswordController extends ChangeNotifier {
         _otpSent = true;
         _successMessage = l10n.otpSentSuccessfully;
         if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(l10n.otpSentSuccessfully)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(l10n.otpSentSuccessfully)));
         }
       } else {
-        _error = response.message.isNotEmpty ? response.message : l10n.invalidEmail;
+        _error = response.message.isNotEmpty
+            ? response.message
+            : l10n.invalidEmail;
       }
     } catch (e) {
       _error = e.toString();
@@ -123,7 +125,9 @@ class ForgotPasswordController extends ChangeNotifier {
           context.go(RouterPath.login);
         }
       } else {
-        _error = response.message.isNotEmpty ? response.message : 'Error resetting password';
+        _error = response.message.isNotEmpty
+            ? response.message
+            : 'Error resetting password';
       }
     } catch (e) {
       _error = e.toString();

@@ -100,6 +100,7 @@ class AuthService {
 
     return response;
   }
+
   /// Forgot password step 1: Send OTP to email
   Future<ApiResponse<void>> sendOtpForgotPassword(String email) async {
     return await authRepo.sendOtpForgotPassword(email);

@@ -1,144 +1,174 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:smartspace_client/l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smartspace_client/ui/mobile/home/home_controller.dart';
+import 'package:smartspace_client/features/reports/models/report_model.dart';
+import 'package:smartspace_client/l10n/app_localizations.dart';
 import 'package:smartspace_client/ui/mobile/layout/app_layout.dart';
+import 'package:smartspace_client/features/reports/utils/report_status_ext.dart';
+import 'package:smartspace_client/util/distance_formatter.dart';
+import 'package:smartspace_client/ui/shared/components/dangerous_reports_slider.dart';
 
-class MobileHomeScreen extends StatefulWidget {
+class MobileHomeScreen extends ConsumerWidget {
   const MobileHomeScreen({super.key});
 
   @override
-  State<MobileHomeScreen> createState() => _MobileHomeScreenState();
-}
-
-class _MobileHomeScreenState extends State<MobileHomeScreen> {
-  late final HomeController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = HomeController();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
+    final state = ref.watch(homeControllerProvider);
+    final controller = ref.read(homeControllerProvider.notifier);
 
     return AppLayout(
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (context, _) {
-          if (_controller.isLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          return RefreshIndicator(
-            onRefresh: () async {
-              // TODO: Implement refresh logic
-            },
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Greeting Area
-                  Text(
-                    l10n.welcomeBack,
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    _controller.user?.fullname ?? l10n.user,
-                    style: theme.textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: theme.colorScheme.onSurface,
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-
-                  // Primary CTA: Create Report
-                  _PrimaryActionCard(
-                    title: l10n.createReport,
-                    subtitle: l10n.subTitleCreateReport,
-                    icon: Icons.add_circle_outline,
-                    onTap: () => _controller.onCreateReportTap(context),
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Quick Actions Grid
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _QuickActionCard(
-                          title: l10n.myReports,
-                          icon: Icons.article_outlined,
-                          onTap: () => _controller.onMyReportsTap(context),
-                        ),
+      child: state.isLoading && state.user == null
+          ? const Center(child: CircularProgressIndicator())
+          : RefreshIndicator(
+              onRefresh: controller.manualRefresh,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Greeting Area
+                    Text(
+                      '${l10n.welcomeBack}, ${state.user?.fullname ?? l10n.user}',
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: theme.colorScheme.onSurface,
                       ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: _QuickActionCard(
-                          title: l10n.notifications,
-                          icon: Icons.notifications_active_outlined,
-                          badgeCount: _controller.unreadNotifications,
-                          onTap: () {
-                            // TODO: Navigate to notifications
-                          },
-                        ),
-                      ),
+                    ),
+                    const SizedBox(height: 32),
+
+                    // Dangerous Reports Slider
+                    if (state.dangerousReports.isNotEmpty) ...[
+                      DangerousReportsSlider(reports: state.dangerousReports),
+                      const SizedBox(height: 32),
                     ],
-                  ),
-                  const SizedBox(height: 40),
 
-                  // Recent Reports Section
-                  Text(
-                    l10n.recentReports,
-                    style: theme.textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-
-                  if (_controller.recentReports.isEmpty)
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 32),
-                        child: Text(
-                          l10n.noReportsYet,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.colorScheme.onSurfaceVariant,
-                          ),
-                        ),
-                      ),
-                    )
-                  else
-                    ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: _controller.recentReports.length,
-                      separatorBuilder: (context, index) => const SizedBox(height: 12),
-                      itemBuilder: (context, index) {
-                        final report = _controller.recentReports[index];
-                        return _ReportCard(report: report);
+                    // Primary CTA: Create Report
+                    _PrimaryActionCard(
+                      title: l10n.createReport,
+                      subtitle: l10n.subTitleCreateReport,
+                      icon: Icons.add_circle_outline,
+                      onTap: () {
+                        // TODO: Navigate to create report flow
                       },
                     ),
-                ],
+                    const SizedBox(height: 24),
+
+                    // Quick Actions Grid
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _QuickActionCard(
+                            title: l10n.myReports,
+                            icon: Icons.history,
+                            onTap: () {
+                              // TODO: Navigate to my reports
+                            },
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: _QuickActionCard(
+                            title: l10n.map,
+                            icon: Icons.map_outlined,
+                            onTap: () {
+                              // TODO: Navigate to map
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _QuickActionCard(
+                            title: l10n.news,
+                            icon: Icons.article_outlined,
+                            onTap: () {
+                              // TODO: Navigate to news
+                            },
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: _QuickActionCard(
+                            title: l10n.instructions,
+                            icon: Icons.help_outline,
+                            onTap: () {
+                              // TODO: Navigate to instructions
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 40),
+
+                    // Recent Reports Section
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          l10n.recentReports,
+                          style: theme.textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            // // TODO route to all recent reports
+                          },
+                          child: Text('${l10n.viewAll} \u2192'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+
+                    if (state.recentReports.isEmpty)
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 32),
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.inbox_outlined,
+                                size: 64,
+                                color: theme.colorScheme.onSurfaceVariant
+                                    .withOpacity(0.5),
+                              ),
+                              const SizedBox(height: 16),
+                              Text(
+                                l10n.noReportsYet,
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    else
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: state.recentReports.length > 5
+                            ? 5
+                            : state.recentReports.length,
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 12),
+                        itemBuilder: (context, index) {
+                          final report = state.recentReports[index];
+                          return _ReportCard(report: report);
+                        },
+                      ),
+                  ],
+                ),
               ),
             ),
-          );
-        },
-      ),
     );
   }
 }
@@ -215,6 +245,7 @@ class _QuickActionCard extends StatelessWidget {
     required this.title,
     required this.icon,
     required this.onTap,
+    // ignore: unused_element_parameter
     this.badgeCount = 0,
   });
 
@@ -281,44 +312,15 @@ class _QuickActionCard extends StatelessWidget {
 }
 
 class _ReportCard extends StatelessWidget {
-  final MockReport report;
+  final ReportModel report;
 
   const _ReportCard({required this.report});
-
-  Color _getStatusColor(BuildContext context, String status) {
-    final theme = Theme.of(context);
-    switch (status) {
-      case 'resolved':
-        return theme.colorScheme.secondary;
-      case 'in_progress':
-      case 'pending':
-        return Colors.orange;   // TODO: add new color to app_theme: orange
-      case 'rejected':
-        return theme.colorScheme.error;
-      default:
-        return theme.colorScheme.primary;
-    }
-  }
-
-  String _getStatusText(String status) {
-    switch (status) {
-      case 'resolved':
-        return 'Đã xử lý';
-      case 'in_progress':
-        return 'Đang xử lý';
-      case 'pending':
-        return 'Đang chờ';
-      case 'rejected':
-        return 'Từ chối';
-      default:
-        return status;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final statusColor = _getStatusColor(context, report.status);
+    final l10n = AppLocalizations.of(context)!;
+    final statusColor = report.status.getColor(context);
 
     return Card(
       elevation: 0,
@@ -340,10 +342,10 @@ class _ReportCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color: theme.colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(8),
-              ),
-              child: Icon(
-                Icons.image_outlined,
-                color: theme.colorScheme.onSurfaceVariant,
+                image: DecorationImage(
+                  image: NetworkImage(report.imageUrl),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             const SizedBox(width: 16),
@@ -363,25 +365,27 @@ class _ReportCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        report.category,
+                        '${report.createdAt.day}/${report.createdAt.month}',
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
                       ),
-                      const SizedBox(width: 8),
-                      Text(
-                        '•',
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
+                      if (report.distanceInMeters != null) ...[
+                        const SizedBox(width: 8),
+                        Text(
+                          '•',
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        '${report.date.day}/${report.date.month}',
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
+                        const SizedBox(width: 8),
+                        Text(
+                          DistanceFormatter.format(report.distanceInMeters!, l10n),
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
                         ),
-                      ),
+                      ],
                     ],
                   ),
                   const SizedBox(height: 8),
@@ -395,7 +399,7 @@ class _ReportCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
-                      _getStatusText(report.status),
+                      report.status.getLocalizedText(l10n),
                       style: theme.textTheme.labelSmall?.copyWith(
                         color: statusColor,
                         fontWeight: FontWeight.bold,

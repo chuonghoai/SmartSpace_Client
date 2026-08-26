@@ -8,7 +8,8 @@ import 'package:smartspace_client/routes/router_path.dart';
 class LoginController extends ChangeNotifier {
   final AuthService _authService;
 
-  LoginController({AuthService? service}) : _authService = service ?? authService;
+  LoginController({AuthService? service})
+    : _authService = service ?? authService;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -36,7 +37,11 @@ class LoginController extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final response = await _authService.login(email.trim(), password, rememberMe);
+      final response = await _authService.login(
+        email.trim(),
+        password,
+        rememberMe,
+      );
 
       if (response.success && response.data != null) {
         final registrationStatus = response.data!.registrationStatus;
@@ -48,7 +53,9 @@ class LoginController extends ChangeNotifier {
           }
         }
       } else {
-        _error = response.message.isNotEmpty ? response.message : 'Login failed. Please try again.';
+        _error = response.message.isNotEmpty
+            ? response.message
+            : 'Login failed. Please try again.';
       }
     } catch (e) {
       _error = e.toString();

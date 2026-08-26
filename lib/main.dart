@@ -8,11 +8,13 @@ import 'core/theme/theme_provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
   await dotenv.load(fileName: ".env");
-  runApp(const SmartSpaceApp());
+  runApp(const ProviderScope(child: SmartSpaceApp()));
 }
 
 class SmartSpaceApp extends StatelessWidget {
@@ -35,10 +37,7 @@ class SmartSpaceApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          supportedLocales: const [
-            Locale('vi'),
-            Locale('en'),
-          ],
+          supportedLocales: const [Locale('vi'), Locale('en')],
           routerConfig: appRouter,
           debugShowCheckedModeBanner: false,
         );
