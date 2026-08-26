@@ -6,10 +6,9 @@ import 'package:smartspace_client/features/notifications/repositories/notificati
 class NotificationRepoApi implements NotificationRepo {
   @override
   Future<ApiResponse<NotificationCountModel>> getUnreadCount() async {
-    final response = await apiClient.get('/notifications/unread-count');
-    return ApiResponse<NotificationCountModel>.fromJson(
-      response.data,
-      (json) => NotificationCountModel.fromJson(json),
+    return await apiClient.get<NotificationCountModel>(
+      '/notifications/unread-count',
+      decoder: (json) => NotificationCountModel.fromJson(json),
     );
   }
 }
