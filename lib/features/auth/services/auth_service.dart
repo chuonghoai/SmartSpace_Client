@@ -46,6 +46,12 @@ class AuthService {
   Future<ApiResponse<void>> logout() async {
     try {
       return await authRepo.logout();
+    } catch (e) {
+      return ApiResponse(
+        success: false,
+        message: 'Logout failed but cleared local data',
+        data: null,
+      );
     } finally {
       // Gọi API logout
       // Xóa FCM token của thiết bị hiện tại
@@ -57,7 +63,7 @@ class AuthService {
       webSocketService.disconnect();
     }
   }
-  
+
   /// Refresh access token with refresh token in secured storage
   Future<bool> refreshToken(String refreshToken) async {
     try {

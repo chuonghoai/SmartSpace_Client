@@ -71,7 +71,7 @@ class WebSocketService extends ChangeNotifier {
   }
 
   void _onConnected(StompFrame frame) {
-    debugPrint('[WS] Connected!');
+    debugPrint('🟢 [WS] Connected!');
     _setStatus(WebSocketStatus.connected);
     if (!(_connectionCompleter?.isCompleted ?? true)) {
       _connectionCompleter?.complete(true);
@@ -79,11 +79,12 @@ class WebSocketService extends ChangeNotifier {
   }
 
   void _onDisconnected(StompFrame frame) {
+    debugPrint('🔴 [WS] Dis connect!');
     _setStatus(WebSocketStatus.disconnected);
   }
 
   void _onError(StompFrame frame) {
-    debugPrint('[WS] STOMP Error: ${frame.body}');
+    debugPrint('🔴 [WS] STOMP Error: ${frame.body}');
     _setStatus(WebSocketStatus.error);
     if (!(_connectionCompleter?.isCompleted ?? true)) {
       _connectionCompleter?.complete(false);
@@ -91,7 +92,7 @@ class WebSocketService extends ChangeNotifier {
   }
 
   void _onWebSocketError(dynamic error) {
-    debugPrint('[WS] WebSocket Error: $error');
+    debugPrint('🔴 [WS] WebSocket Error: $error');
     _setStatus(WebSocketStatus.error);
     if (!(_connectionCompleter?.isCompleted ?? true)) {
       _connectionCompleter?.complete(false);
