@@ -29,11 +29,9 @@ class AuthService {
         data != null &&
         data.accessToken.isNotEmpty &&
         data.refreshToken.isNotEmpty) {
-      await Future.wait([
-        accessTokenService.saveAccessToken(data.accessToken),
-        refreshTokenService.saveRefreshToken(data.refreshToken),
-        userStorageService.saveUser(data.userModel!),
-      ]);
+      await accessTokenService.saveAccessToken(data.accessToken);
+      await refreshTokenService.saveRefreshToken(data.refreshToken);
+      await userStorageService.saveUser(data.userModel!);
 
       // Kết nối WebSocket ngay sau khi lưu token
       final wsConnected = await webSocketService.connect();
@@ -60,14 +58,22 @@ class AuthService {
     return response;
   }
 
+  Future<ApiResponse<void>> logout() async {
+    try {
+      return await authRepo.logout();
+    } finally {
+      accessTokenService.clear();
+      refreshTokenService.clear();
+      userStorageService.clear();
+    }
+  }
+
   /// Refresh access token with refresh token in secured storage
   Future<bool> refreshToken(String refreshToken) async {
     try {
       final response = await authRepo.refreshToken(refreshToken);
-      await Future.wait([
-        accessTokenService.saveAccessToken(response.data!.accessToken),
-        refreshTokenService.saveRefreshToken(response.data!.refreshToken),
-      ]);
+      await accessTokenService.saveAccessToken(response.data!.accessToken);
+      await refreshTokenService.saveRefreshToken(response.data!.refreshToken);
       return true;
     } catch (e) {
       return false;
@@ -94,11 +100,9 @@ class AuthService {
     final data = response.data;
 
     if (response.success && data != null) {
-      await Future.wait([
-        accessTokenService.saveAccessToken(data.accessToken),
-        refreshTokenService.saveRefreshToken(data.refreshToken),
-        userStorageService.saveUser(data.userModel!),
-      ]);
+      await accessTokenService.saveAccessToken(data.accessToken);
+      await refreshTokenService.saveRefreshToken(data.refreshToken);
+      await userStorageService.saveUser(data.userModel!);
     }
 
     return response;

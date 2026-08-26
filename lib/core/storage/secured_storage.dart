@@ -1,30 +1,30 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SecuredStorageService {
-  final _storage = const FlutterSecureStorage();
+  final _storage = const FlutterSecureStorage(
+    aOptions: AndroidOptions(),
+  );
   
-  Future<SharedPreferences> get _prefs async => await SharedPreferences.getInstance();
-
   Future<void> set(String key, dynamic value) async {
     final stringValue = jsonEncode(value);
-    if (kIsWeb) {
-      final prefs = await _prefs;
-      await prefs.setString(key, stringValue);
-    } else {
+    try {
+      await _storage.write(key: key, value: stringValue);
+    } catch (e) {
+      // If keystore is corrupted, clearing it usually fixes the write issue
+      await _storage.deleteAll();
       await _storage.write(key: key, value: stringValue);
     }
   }
 
   Future<T?> get<T>(String key) async {
     String? value;
-    if (kIsWeb) {
-      final prefs = await _prefs;
-      value = prefs.getString(key);
-    } else {
+    try {
       value = await _storage.read(key: key);
+    } catch (e) {
+      // Keystore is corrupted, clear old data
+      await _storage.deleteAll();
+      return null;
     }
     
     if (value == null) {
@@ -34,21 +34,11 @@ class SecuredStorageService {
   }
 
   Future<void> remove(String key) async {
-    if (kIsWeb) {
-      final prefs = await _prefs;
-      await prefs.remove(key);
-    } else {
-      await _storage.delete(key: key);
-    }
+    await _storage.delete(key: key);
   }
 
   Future<void> clear() async {
-    if (kIsWeb) {
-      final prefs = await _prefs;
-      await prefs.clear();
-    } else {
-      await _storage.deleteAll();
-    }
+    await _storage.deleteAll();
   }
 }
 

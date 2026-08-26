@@ -8,7 +8,8 @@ class WebForgotPasswordScreen extends StatefulWidget {
   const WebForgotPasswordScreen({super.key});
 
   @override
-  State<WebForgotPasswordScreen> createState() => _WebForgotPasswordScreenState();
+  State<WebForgotPasswordScreen> createState() =>
+      _WebForgotPasswordScreenState();
 }
 
 class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
@@ -16,8 +17,9 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _otpController = TextEditingController();
   final TextEditingController _newPasswordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
-  
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _otpFocusNode = FocusNode();
   final FocusNode _newPasswordFocusNode = FocusNode();
@@ -68,11 +70,7 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.lock_reset,
-                    size: 48,
-                    color: colorScheme.primary,
-                  ),
+                  Icon(Icons.lock_reset, size: 48, color: colorScheme.primary),
                   const SizedBox(width: 16),
                   Expanded(
                     child: Text(
@@ -127,22 +125,25 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.done,
                       onSubmitted: (_) {
-                        if (!_controller.isSendingOtp && !_controller.isResettingPassword) {
+                        if (!_controller.isSendingOtp &&
+                            !_controller.isResettingPassword) {
                           _controller.sendOtp(
                             context: context,
                             email: _emailController.text,
                           );
                         }
                       },
-                      decoration: InputDecoration(
-                        hintText: l10n.email,
-                      ),
-                      enabled: !_controller.isSendingOtp && !_controller.isResettingPassword,
+                      decoration: InputDecoration(hintText: l10n.email),
+                      enabled:
+                          !_controller.isSendingOtp &&
+                          !_controller.isResettingPassword,
                     ),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
-                    onPressed: _controller.isSendingOtp || _controller.isResettingPassword
+                    onPressed:
+                        _controller.isSendingOtp ||
+                            _controller.isResettingPassword
                         ? null
                         : () {
                             _controller.sendOtp(
@@ -151,7 +152,10 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
                             );
                           },
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 18,
+                      ),
                     ),
                     child: _controller.isSendingOtp
                         ? const SizedBox(
@@ -180,7 +184,8 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
                 textInputAction: TextInputAction.next,
                 onSubmitted: (_) => _newPasswordFocusNode.requestFocus(),
                 decoration: InputDecoration(hintText: l10n.enterOtp),
-                enabled: _controller.otpSent && !_controller.isResettingPassword,
+                enabled:
+                    _controller.otpSent && !_controller.isResettingPassword,
               ),
               const SizedBox(height: 20),
 
@@ -202,7 +207,9 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
                   hintText: l10n.enterPassword,
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _obscureNewPassword ? Icons.visibility_off : Icons.visibility,
+                      _obscureNewPassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
                     ),
                     onPressed: () {
                       setState(() {
@@ -211,10 +218,11 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
                     },
                   ),
                 ),
-                enabled: _controller.otpSent && !_controller.isResettingPassword,
+                enabled:
+                    _controller.otpSent && !_controller.isResettingPassword,
               ),
               const SizedBox(height: 20),
-              
+
               // Confirm Password input
               Text(
                 l10n.confirmPassword,
@@ -243,7 +251,9 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
                   hintText: l10n.confirmPassword,
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
+                      _obscureConfirmPassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
                     ),
                     onPressed: () {
                       setState(() {
@@ -252,13 +262,15 @@ class _WebForgotPasswordScreenState extends State<WebForgotPasswordScreen> {
                     },
                   ),
                 ),
-                enabled: _controller.otpSent && !_controller.isResettingPassword,
+                enabled:
+                    _controller.otpSent && !_controller.isResettingPassword,
               ),
               const SizedBox(height: 32),
 
               // Reset Password button
               ElevatedButton(
-                onPressed: (_controller.isResettingPassword || !_controller.otpSent)
+                onPressed:
+                    (_controller.isResettingPassword || !_controller.otpSent)
                     ? null
                     : () {
                         _controller.resetPassword(

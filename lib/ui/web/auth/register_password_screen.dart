@@ -117,7 +117,9 @@ class _WebRegisterPasswordScreenState extends State<WebRegisterPasswordScreen> {
                   hintText: l10n.enterPassword,
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                      _obscurePassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
                     ),
                     onPressed: () {
                       setState(() {
@@ -156,7 +158,9 @@ class _WebRegisterPasswordScreenState extends State<WebRegisterPasswordScreen> {
                   hintText: l10n.confirmPassword,
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
+                      _obscureConfirmPassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
                     ),
                     onPressed: () {
                       setState(() {

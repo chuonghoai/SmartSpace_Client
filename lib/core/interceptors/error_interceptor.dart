@@ -22,6 +22,7 @@ class ErrorInterceptor extends Interceptor {
     if (status == 401 &&
         !requestUrl.contains('/auth/login') &&
         !requestUrl.contains('/auth/refresh-token') &&
+        !requestUrl.contains('/auth/logout') &&
         err.requestOptions.extra['isRetry'] != true) {
       final refreshToken = await refreshTokenService.getRefreshToken();
       String reason = 'unauthorized';

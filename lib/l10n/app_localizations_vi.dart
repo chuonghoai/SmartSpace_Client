@@ -256,4 +256,51 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get logout => 'Đăng xuất';
+
+  @override
+  String get dangerousReports => 'Cảnh báo nguy hiểm';
+
+  @override
+  String get map => 'Bản đồ';
+
+  @override
+  String get news => 'Tin tức';
+
+  @override
+  String get instructions => 'Hướng dẫn';
+
+  @override
+  String get viewAll => 'Tất cả';
+
+  @override
+  String get dangerous => 'NGUY HIỂM';
+
+  @override
+  String distanceFromYou(String value, String unit) {
+    return 'Cách bạn $value $unit';
+  }
+
+  @override
+  String get unitMeter => 'm';
+
+  @override
+  String get unitKilometer => 'km';
+
+  @override
+  String get searchPlaceholder => 'Tìm kiếm...';
+
+  @override
+  String get reportStatusProcessed => 'Đã xử lý';
+
+  @override
+  String get reportStatusProcessing => 'Đang xử lý';
+
+  @override
+  String get reportStatusPending => 'Đang chờ';
+
+  @override
+  String get reportStatusRejected => 'Từ chối';
+
+  @override
+  String get reportStatusUnknown => 'Khác';
 }

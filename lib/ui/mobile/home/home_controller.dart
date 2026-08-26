@@ -1,99 +1,90 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smartspace_client/core/auth/user_storage_service.dart';
+import 'package:smartspace_client/features/notifications/providers/notification_provider.dart';
 import 'package:smartspace_client/features/profile/models/user_model.dart';
+import 'package:smartspace_client/features/reports/models/report_model.dart';
+import 'package:smartspace_client/features/reports/providers/report_providers.dart';
 
-// Note: A real implementation would move this to a domain/model layer
-class MockReport {
-  final String id;
-  final String title;
-  final String status;
-  final DateTime date;
-  final String category;
+class HomeState {
+  final bool isLoading;
+  final UserModel? user;
+  final List<ReportModel> recentReports;
+  final List<ReportModel> dangerousReports;
+  final int unreadNotifications;
+  final String? error;
 
-  MockReport({
-    required this.id,
-    required this.title,
-    required this.status,
-    required this.date,
-    required this.category,
+  HomeState({
+    this.isLoading = false,
+    this.user,
+    this.recentReports = const [],
+    this.dangerousReports = const [],
+    this.unreadNotifications = 0,
+    this.error,
   });
+
+  HomeState copyWith({
+    bool? isLoading,
+    UserModel? user,
+    List<ReportModel>? recentReports,
+    List<ReportModel>? dangerousReports,
+    int? unreadNotifications,
+    String? error,
+  }) {
+    return HomeState(
+      isLoading: isLoading ?? this.isLoading,
+      user: user ?? this.user,
+      recentReports: recentReports ?? this.recentReports,
+      dangerousReports: dangerousReports ?? this.dangerousReports,
+      unreadNotifications: unreadNotifications ?? this.unreadNotifications,
+      error: error ?? this.error,
+    );
+  }
 }
 
-class HomeController extends ChangeNotifier {
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
+class HomeController extends StateNotifier<HomeState> {
+  final Ref ref;
 
-  List<MockReport> _recentReports = [];
-  List<MockReport> get recentReports => _recentReports;
-
-  final int _unreadNotifications = 3;
-  int get unreadNotifications => _unreadNotifications;
-
-  UserModel? _user;
-  UserModel? get user => _user;
-
-  HomeController() {
+  HomeController(this.ref) : super(HomeState()) {
     _init();
+
+    // Listen to report provider
+    ref.listen<ReportsState>(reportsProvider, (previous, next) {
+      state = state.copyWith(
+        recentReports: next.recentReports,
+        dangerousReports: next.dangerousReports,
+        isLoading:
+            next.isLoading &&
+            state.user == null, // Only block if we have no initial data
+        error: next.error,
+      );
+    });
+
+    // Listen to notification provider
+    ref.listen<NotificationState>(notificationProvider, (previous, next) {
+      state = state.copyWith(
+        unreadNotifications: next.countModel?.notifNumber ?? 0,
+      );
+    });
   }
 
   Future<void> _init() async {
-    _isLoading = true;
-    notifyListeners();
-
-    await _loadUser();
-    await _loadMockData();
-
-    _isLoading = false;
-    notifyListeners();
+    state = state.copyWith(isLoading: true);
+    final user = await userStorageService.getUser();
+    state = state.copyWith(user: user, isLoading: false);
   }
 
-  Future<void> _loadUser() async {
-    final u = await userStorageService.getUser();
-    if (u != null) {
-      _user = u;
-    }
-  }
-
-  Future<void> _loadMockData() async {
-    // Simulate network delay
-    await Future.delayed(const Duration(milliseconds: 800));
-
-    _recentReports = [
-      MockReport(
-        id: '1',
-        title: 'Hố tử thần trên đường A',
-        status: 'pending',
-        date: DateTime.now().subtract(const Duration(hours: 2)),
-        category: 'Hạ tầng',
-      ),
-      MockReport(
-        id: '2',
-        title: 'Xả rác trộm tại hẻm B',
-        status: 'resolved',
-        date: DateTime.now().subtract(const Duration(days: 1)),
-        category: 'Môi trường',
-      ),
-      MockReport(
-        id: '3',
-        title: 'Đèn đường hỏng ở khu C',
-        status: 'in_progress',
-        date: DateTime.now().subtract(const Duration(days: 2)),
-        category: 'Hạ tầng',
-      ),
-    ];
-  }
-
-  void onCreateReportTap(BuildContext context) {
-    // TODO: Navigate to create report flow
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Tạo phản ánh clicked (Mock)')),
-    );
-  }
-
-  void onMyReportsTap(BuildContext context) {
-    // TODO: Navigate to my reports
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Phản ánh của tôi clicked (Mock)')),
-    );
+  Future<void> manualRefresh() async {
+    state = state.copyWith(isLoading: true);
+    await Future.wait([
+      ref.read(reportsProvider.notifier).refreshAll(),
+      ref.read(notificationProvider.notifier).fetchCount(forceRefresh: true),
+    ]);
+    state = state.copyWith(isLoading: false);
   }
 }
+
+final homeControllerProvider = StateNotifierProvider<HomeController, HomeState>(
+  (ref) {
+    return HomeController(ref);
+  },
+);

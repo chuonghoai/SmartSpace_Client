@@ -83,5 +83,30 @@
   "recentReports": "Recent reports",
   "noReportsYet": "No reports yet",
   "user": "User",
-  "logout": "Log out"
+  "logout": "Log out",
+  "dangerousReports": "Dangerous warnings",
+  "map": "Map",
+  "news": "News",
+  "instructions": "Instructions",
+  "viewAll": "View all",
+  "dangerous": "DANGEROUS",
+  "distanceFromYou": "{value} {unit} away",
+  "@distanceFromYou": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "unitMeter": "m",
+  "unitKilometer": "km",
+  "searchPlaceholder": "Search...",
+  "reportStatusProcessed": "Processed",
+  "reportStatusProcessing": "Processing",
+  "reportStatusPending": "Pending",
+  "reportStatusRejected": "Rejected",
+  "reportStatusUnknown": "Unknown"
 }

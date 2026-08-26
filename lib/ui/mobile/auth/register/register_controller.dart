@@ -199,7 +199,9 @@ class RegisterController extends ChangeNotifier {
       debugPrint('▶ [completeProfile] START');
       debugPrint('▶ [completeProfile] fullname: ${fullname.trim()}');
       debugPrint('▶ [completeProfile] phone: ${phone.trim()}');
-      debugPrint('▶ [completeProfile] hasAvatar: ${_selectedAvatarFile != null}');
+      debugPrint(
+        '▶ [completeProfile] hasAvatar: ${_selectedAvatarFile != null}',
+      );
 
       if (_selectedAvatarFile != null) {
         debugPrint('▶ [completeProfile] Uploading avatar...');

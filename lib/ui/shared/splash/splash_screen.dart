@@ -61,7 +61,9 @@ class _SplashScreenState extends State<SplashScreen> {
                     const SizedBox(height: 8),
                     Text(
                       _controller.errorMessage!,
-                      style: textTheme.bodyMedium?.copyWith(color: colorScheme.error),
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.error,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 24),
@@ -83,11 +85,7 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.location_on,
-                    size: 80,
-                    color: colorScheme.primary,
-                  ),
+                  Icon(Icons.location_on, size: 80, color: colorScheme.primary),
                   const SizedBox(height: 24),
                   Text(
                     l10n.smartSpaceAppName,

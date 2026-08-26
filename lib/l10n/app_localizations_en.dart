@@ -256,4 +256,51 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logout => 'Log out';
+
+  @override
+  String get dangerousReports => 'Dangerous warnings';
+
+  @override
+  String get map => 'Map';
+
+  @override
+  String get news => 'News';
+
+  @override
+  String get instructions => 'Instructions';
+
+  @override
+  String get viewAll => 'View all';
+
+  @override
+  String get dangerous => 'DANGEROUS';
+
+  @override
+  String distanceFromYou(String value, String unit) {
+    return '$value $unit away';
+  }
+
+  @override
+  String get unitMeter => 'm';
+
+  @override
+  String get unitKilometer => 'km';
+
+  @override
+  String get searchPlaceholder => 'Search...';
+
+  @override
+  String get reportStatusProcessed => 'Processed';
+
+  @override
+  String get reportStatusProcessing => 'Processing';
+
+  @override
+  String get reportStatusPending => 'Pending';
+
+  @override
+  String get reportStatusRejected => 'Rejected';
+
+  @override
+  String get reportStatusUnknown => 'Unknown';
 }

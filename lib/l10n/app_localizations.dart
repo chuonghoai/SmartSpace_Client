@@ -595,6 +595,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Log out'**
   String get logout;
+
+  /// No description provided for @dangerousReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Dangerous warnings'**
+  String get dangerousReports;
+
+  /// No description provided for @map.
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get map;
+
+  /// No description provided for @news.
+  ///
+  /// In en, this message translates to:
+  /// **'News'**
+  String get news;
+
+  /// No description provided for @instructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Instructions'**
+  String get instructions;
+
+  /// No description provided for @viewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View all'**
+  String get viewAll;
+
+  /// No description provided for @dangerous.
+  ///
+  /// In en, this message translates to:
+  /// **'DANGEROUS'**
+  String get dangerous;
+
+  /// No description provided for @distanceFromYou.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} {unit} away'**
+  String distanceFromYou(String value, String unit);
+
+  /// No description provided for @unitMeter.
+  ///
+  /// In en, this message translates to:
+  /// **'m'**
+  String get unitMeter;
+
+  /// No description provided for @unitKilometer.
+  ///
+  /// In en, this message translates to:
+  /// **'km'**
+  String get unitKilometer;
+
+  /// No description provided for @searchPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Search...'**
+  String get searchPlaceholder;
+
+  /// No description provided for @reportStatusProcessed.
+  ///
+  /// In en, this message translates to:
+  /// **'Processed'**
+  String get reportStatusProcessed;
+
+  /// No description provided for @reportStatusProcessing.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing'**
+  String get reportStatusProcessing;
+
+  /// No description provided for @reportStatusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get reportStatusPending;
+
+  /// No description provided for @reportStatusRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get reportStatusRejected;
+
+  /// No description provided for @reportStatusUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get reportStatusUnknown;
 }
 
 class _AppLocalizationsDelegate
