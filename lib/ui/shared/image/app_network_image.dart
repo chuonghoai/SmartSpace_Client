@@ -39,7 +39,7 @@ class AppNetworkImage extends StatelessWidget {
       String finalUrl = url!;
       if (finalUrl.contains('ui-avatars.com') &&
           !finalUrl.contains('format=')) {
-        finalUrl += (finalUrl.contains('?') ? '&' : '?') + 'format=png';
+        finalUrl += '${finalUrl.contains('?') ? '&' : '?'}format=png';
       }
 
       return Image.network(

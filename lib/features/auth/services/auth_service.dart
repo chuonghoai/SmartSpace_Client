@@ -44,30 +44,20 @@ class AuthService {
   }
 
   Future<ApiResponse<void>> logout() async {
-    // Gọi API logout
-    final response = await authRepo.logout();
-    // Xóa FCM token của thiết bị hiện tại
-    await FirebaseService.clearTokenOnServer();
-    // Xóa token
-    await Future.wait([
-      accessTokenService.clear(),
-      refreshTokenService.clear(),
-      userStorageService.clear(),
-    ]);
-    webSocketService.disconnect();
-    return response;
-  }
-
-  Future<ApiResponse<void>> logout() async {
     try {
       return await authRepo.logout();
     } finally {
+      // Gọi API logout
+      // Xóa FCM token của thiết bị hiện tại
+      await FirebaseService.clearTokenOnServer();
+      // Xóa token
       accessTokenService.clear();
       refreshTokenService.clear();
       userStorageService.clear();
+      webSocketService.disconnect();
     }
   }
-
+  
   /// Refresh access token with refresh token in secured storage
   Future<bool> refreshToken(String refreshToken) async {
     try {
