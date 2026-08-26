@@ -108,5 +108,6 @@
   "reportStatusProcessing": "Đang xử lý",
   "reportStatusPending": "Đang chờ",
   "reportStatusRejected": "Từ chối",
-  "reportStatusUnknown": "Khác"
+  "reportStatusUnknown": "Khác",
+  "sessionExpired": "Phiên đăng nhập hết hạn"
 }

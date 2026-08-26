@@ -303,4 +303,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get reportStatusUnknown => 'Khác';
+
+  @override
+  String get sessionExpired => 'Phiên đăng nhập hết hạn';
 }

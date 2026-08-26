@@ -9,8 +9,12 @@ import 'package:smartspace_client/ui/responsive/screens/auth/register_email_scre
 import 'package:smartspace_client/ui/responsive/screens/auth/register_otp_screen.dart';
 import 'package:smartspace_client/ui/responsive/screens/auth/register_password_screen.dart';
 import 'package:smartspace_client/ui/responsive/screens/auth/forgot_password_screen.dart';
+import 'package:flutter/material.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final appRouter = GoRouter(
+  navigatorKey: navigatorKey,
   initialLocation: RouterPath.splash,
   routes: [
     GoRoute(

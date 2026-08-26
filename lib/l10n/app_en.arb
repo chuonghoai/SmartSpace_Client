@@ -108,5 +108,6 @@
   "reportStatusProcessing": "Processing",
   "reportStatusPending": "Pending",
   "reportStatusRejected": "Rejected",
-  "reportStatusUnknown": "Unknown"
+  "reportStatusUnknown": "Unknown",
+  "sessionExpired": "Session expired"
 }

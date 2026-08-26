@@ -303,4 +303,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reportStatusUnknown => 'Unknown';
+
+  @override
+  String get sessionExpired => 'Session expired';
 }

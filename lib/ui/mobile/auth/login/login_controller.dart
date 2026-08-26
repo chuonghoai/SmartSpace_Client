@@ -52,7 +52,7 @@ class LoginController extends ChangeNotifier {
             if (wsConnected) {
               context.go(RouterPath.home);
             } else {
-              _error = 'Không thể kết nối real-time. Vui lòng thử lại.';
+              _error = 'Không thể kết nối mạng. Vui lòng thử lại sau.';
             }
           } else {
             context.go(RouterPath.completeProfile);
