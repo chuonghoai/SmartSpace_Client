@@ -14,7 +14,7 @@ class WebSidebar extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     final notificationState = ref.watch(notificationProvider);
     final unreadCount = notificationState.countModel?.notifNumber ?? 0;
-    
+
     return Container(
       width: 250,
       color: theme.colorScheme.surface,
@@ -44,89 +44,89 @@ class WebSidebar extends ConsumerWidget {
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               children: [
-                  _SidebarItem(
-                    icon: Icons.home_outlined,
-                    label: l10n.home,
-                    onTap: () {
-                      context.go(RouterPath.home);
-                    },
-                    isSelected: true,
-                  ),
-                  _SidebarItem(
-                    icon: Icons.notifications_outlined,
-                    label: l10n.notifications,
-                    trailing: unreadCount > 0
-                        ? Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 2,
+                _SidebarItem(
+                  icon: Icons.home_outlined,
+                  label: l10n.home,
+                  onTap: () {
+                    context.go(RouterPath.home);
+                  },
+                  isSelected: true,
+                ),
+                _SidebarItem(
+                  icon: Icons.notifications_outlined,
+                  label: l10n.notifications,
+                  trailing: unreadCount > 0
+                      ? Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 2,
+                          ),
+                          decoration: BoxDecoration(
+                            color: theme.colorScheme.error,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            unreadCount > 99 ? '99+' : unreadCount.toString(),
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              color: theme.colorScheme.onError,
+                              fontWeight: FontWeight.bold,
                             ),
-                            decoration: BoxDecoration(
-                              color: theme.colorScheme.error,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Text(
-                              unreadCount > 99 ? '99+' : unreadCount.toString(),
-                              style: theme.textTheme.labelSmall?.copyWith(
-                                color: theme.colorScheme.onError,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          )
-                        : null,
-                    onTap: () {
-                      // TODO: Navigate to Notifications
-                    },
-                  ),
-                  _SidebarItem(
-                    icon: Icons.report_outlined,
-                    label: l10n.myReports,
-                    onTap: () {
-                      // TODO: Navigate to My Reports
-                    },
-                  ),
-                  _SidebarItem(
-                    icon: Icons.map_outlined,
-                    label: l10n.map,
-                    onTap: () {
-                      // TODO: Navigate to Map
-                    },
-                  ),
-                  _SidebarItem(
-                    icon: Icons.article_outlined,
-                    label: l10n.news, // Fixed 'title' to 'label'
-                    onTap: () {
-                      // TODO: Navigate to news
-                    },
-                  ),
+                          ),
+                        )
+                      : null,
+                  onTap: () {
+                    // TODO: Navigate to Notifications
+                  },
+                ),
+                _SidebarItem(
+                  icon: Icons.report_outlined,
+                  label: l10n.myReports,
+                  onTap: () {
+                    // TODO: Navigate to My Reports
+                  },
+                ),
+                _SidebarItem(
+                  icon: Icons.map_outlined,
+                  label: l10n.map,
+                  onTap: () {
+                    // TODO: Navigate to Map
+                  },
+                ),
+                _SidebarItem(
+                  icon: Icons.article_outlined,
+                  label: l10n.news, // Fixed 'title' to 'label'
+                  onTap: () {
+                    // TODO: Navigate to news
+                  },
+                ),
 
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.0),
-                    child: Divider(height: 1),
-                  ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                  child: Divider(height: 1),
+                ),
 
-                  // Secondary Navigation
-                  _SidebarItem(
-                    icon: Icons.settings_outlined,
-                    label: l10n.settings,
-                    onTap: () {
-                      // TODO: Navigate to Settings
-                    },
-                  ),
-                  _SidebarItem(
-                    icon: Icons.help_outline,
-                    label: l10n.instructions,
-                    onTap: () {
-                      // TODO: Navigate to instructions
-                    },
-                  ),
-                  _SidebarItem(
-                    icon: Icons.info_outline,
-                    label: l10n.aboutApp,
-                    onTap: () {
-                      // TODO: Navigate to About application
-                    },
-                  ),
+                // Secondary Navigation
+                _SidebarItem(
+                  icon: Icons.settings_outlined,
+                  label: l10n.settings,
+                  onTap: () {
+                    context.push(RouterPath.settings);
+                  },
+                ),
+                _SidebarItem(
+                  icon: Icons.help_outline,
+                  label: l10n.instructions,
+                  onTap: () {
+                    // TODO: Navigate to instructions
+                  },
+                ),
+                _SidebarItem(
+                  icon: Icons.info_outline,
+                  label: l10n.aboutApp,
+                  onTap: () {
+                    // TODO: Navigate to About application
+                  },
+                ),
               ],
             ),
           ),

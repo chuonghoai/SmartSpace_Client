@@ -306,4 +306,58 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sessionExpired => 'Session expired';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get accountSection => 'Account';
+
+  @override
+  String get shareHistory => 'Share History';
+
+  @override
+  String get loginSettings => 'Login Settings';
+
+  @override
+  String get changePassword => 'Change Password';
+
+  @override
+  String get manageDevices => 'Manage Devices';
+
+  @override
+  String get notificationSettings => 'Notification Settings';
+
+  @override
+  String get appSection => 'App';
+
+  @override
+  String get termsOfService => 'Terms of Service';
+
+  @override
+  String get privacyPolicy => 'Privacy Policy';
+
+  @override
+  String get appVersion => 'App Version';
+
+  @override
+  String get supportSection => 'Support';
+
+  @override
+  String get supportHotline => 'Support Hotline';
+
+  @override
+  String get userGuide => 'User Guide';
+
+  @override
+  String get faq => 'FAQ';
+
+  @override
+  String get logoutConfirmTitle => 'Log out';
+
+  @override
+  String get logoutConfirmMessage => 'Are you sure you want to log out?';
+
+  @override
+  String get cancel => 'Cancel';
 }

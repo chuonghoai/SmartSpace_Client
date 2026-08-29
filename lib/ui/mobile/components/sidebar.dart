@@ -8,8 +8,8 @@ import 'package:smartspace_client/features/auth/services/auth_service.dart';
 import 'package:smartspace_client/features/notifications/providers/notification_provider.dart';
 import 'package:smartspace_client/features/profile/models/user_model.dart';
 import 'package:smartspace_client/l10n/app_localizations.dart';
-import 'package:smartspace_client/routes/router_path.dart';
 import 'package:smartspace_client/routes/app_router.dart';
+import 'package:smartspace_client/routes/router_path.dart';
 import 'package:smartspace_client/ui/shared/image/app_network_image.dart';
 
 class Sidebar extends ConsumerWidget {
@@ -155,7 +155,7 @@ class Sidebar extends ConsumerWidget {
                     label: l10n.settings,
                     onTap: () {
                       Navigator.pop(context);
-                      // TODO: Navigate to Settings
+                      context.push(RouterPath.settings);
                     },
                   ),
                   _SidebarItem(
