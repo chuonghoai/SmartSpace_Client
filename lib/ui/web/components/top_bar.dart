@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smartspace_client/l10n/app_localizations.dart';
+import 'package:smartspace_client/ui/shared/components/connection_indicator.dart';
 
 class WebTopBar extends StatefulWidget implements PreferredSizeWidget {
   const WebTopBar({super.key});
@@ -120,6 +121,10 @@ class _WebTopBarState extends State<WebTopBar> {
           const Spacer(),
 
           // Actions
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: ConnectionIndicator(),
+          ),
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
             onPressed: () {},

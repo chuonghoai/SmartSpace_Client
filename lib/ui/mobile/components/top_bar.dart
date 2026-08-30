@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smartspace_client/features/notifications/providers/notification_provider.dart';
 import 'package:smartspace_client/l10n/app_localizations.dart';
+import 'package:smartspace_client/ui/shared/components/connection_indicator.dart';
 
 class TopBar extends ConsumerWidget implements PreferredSizeWidget {
   const TopBar({super.key});
@@ -18,6 +19,10 @@ class TopBar extends ConsumerWidget implements PreferredSizeWidget {
     return AppBar(
       title: const _TopBarSearchBox(),
       actions: [
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          child: ConnectionIndicator(),
+        ),
         Stack(
           alignment: Alignment.center,
           children: [

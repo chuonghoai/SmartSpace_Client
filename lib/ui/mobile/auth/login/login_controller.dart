@@ -4,6 +4,7 @@ import 'package:smartspace_client/core/constants/registration_status.dart';
 import 'package:smartspace_client/features/auth/services/auth_service.dart';
 import 'package:smartspace_client/l10n/app_localizations.dart';
 import 'package:smartspace_client/routes/router_path.dart';
+import 'package:smartspace_client/core/connection/connection_manager.dart';
 
 class LoginController extends ChangeNotifier {
   final AuthService _authService;
@@ -43,17 +44,13 @@ class LoginController extends ChangeNotifier {
         rememberMe,
       );
       final response = result.response;
-      final wsConnected = result.wsConnected;
 
       if (response.success && response.data != null) {
         final registrationStatus = response.data!.registrationStatus;
         if (context.mounted) {
           if (registrationStatus == ERegistrationStatus.completed) {
-            if (wsConnected) {
-              context.go(RouterPath.home);
-            } else {
-              _error = 'Không thể kết nối mạng. Vui lòng thử lại sau.';
-            }
+            connectionManager.startConnections();
+            context.go(RouterPath.home);
           } else {
             context.go(RouterPath.completeProfile);
           }

@@ -9,6 +9,7 @@ import 'package:smartspace_client/core/theme/theme_provider.dart';
 import 'package:smartspace_client/features/auth/services/auth_service.dart';
 import 'package:smartspace_client/routes/router_path.dart';
 import 'package:smartspace_client/util/location_service.dart';
+import 'package:smartspace_client/core/connection/connection_manager.dart';
 
 class SplashController extends ChangeNotifier {
   bool _isLoading = true;
@@ -40,9 +41,9 @@ class SplashController extends ChangeNotifier {
 
       // Access token valid -> /home
       if (accessToken != null && accessToken.isNotEmpty) {
-        await locationService
-            .getCurrentPosition(); // Request location permission if not granted yet
+        await locationService.getCurrentPosition(); // Request location permission if not granted yet
         if (!context.mounted) return;
+        connectionManager.startConnections();
         context.go(RouterPath.home);
         return;
       }
@@ -59,9 +60,9 @@ class SplashController extends ChangeNotifier {
         }
         if (!context.mounted) return;
         if (success) {
-          await locationService
-              .getCurrentPosition(); // Request location permission if not granted yet
+          await locationService.getCurrentPosition(); // Request location permission if not granted yet
           if (!context.mounted) return;
+          connectionManager.startConnections();
           context.go(RouterPath.home);
           return;
         }

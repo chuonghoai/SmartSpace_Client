@@ -129,6 +129,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get passwordsDoNotMatch => 'Passwords do not match';
 
   @override
+  String get connectionUnstable =>
+      'Service is currently unstable, please try again later.';
+
+  @override
   String get completeProfile => 'Complete Profile';
 
   @override

@@ -29,6 +29,13 @@ class FirebaseService {
     _listenForeground();
 
     _listenOnMessageOpenedApp();
+    
+    // Listen for token refresh once during initialization
+    _messaging.onTokenRefresh.listen((newToken) {
+      _currentFcmToken = newToken;
+      _sendTokenToServer(newToken);
+    });
+    
     debugPrint('[FCM] Firebase initialized');
   }
 
@@ -57,11 +64,6 @@ class FirebaseService {
         await _sendTokenToServer(_currentFcmToken!);
         debugPrint('[FCM] Token: ${_currentFcmToken!.substring(0, 20)}...');
       }
-      // Token có thể bị Firebase refresh -> đăng ký lại tự động
-      _messaging.onTokenRefresh.listen((newToken) {
-        _currentFcmToken = newToken;
-        _sendTokenToServer(newToken);
-      });
       return _currentFcmToken;
     } catch (e) {
       debugPrint('[FCM] getToken failed: $e');

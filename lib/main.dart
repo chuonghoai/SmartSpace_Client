@@ -8,8 +8,10 @@ import 'core/theme/theme_provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:smartspace_client/core/notification/firebase_service.dart';
+import 'package:smartspace_client/core/toast/toast_service.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smartspace_client/core/connection/connection_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,8 +21,35 @@ void main() async {
   runApp(const ProviderScope(child: SmartSpaceApp()));
 }
 
-class SmartSpaceApp extends StatelessWidget {
+class SmartSpaceApp extends StatefulWidget {
   const SmartSpaceApp({super.key});
+
+  @override
+  State<SmartSpaceApp> createState() => _SmartSpaceAppState();
+}
+
+class _SmartSpaceAppState extends State<SmartSpaceApp> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.paused || state == AppLifecycleState.detached || state == AppLifecycleState.hidden) {
+      connectionManager.pauseConnections();
+    } else if (state == AppLifecycleState.resumed) {
+      connectionManager.resumeConnections();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +57,7 @@ class SmartSpaceApp extends StatelessWidget {
       listenable: Listenable.merge([localeProvider, themeProvider]),
       builder: (context, child) {
         return MaterialApp.router(
+          scaffoldMessengerKey: scaffoldMessengerKey,
           title: 'SmartSpace Client',
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,

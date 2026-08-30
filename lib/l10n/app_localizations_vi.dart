@@ -129,6 +129,10 @@ class AppLocalizationsVi extends AppLocalizations {
   String get passwordsDoNotMatch => 'Mật khẩu không khớp';
 
   @override
+  String get connectionUnstable =>
+      'Kết nối hiện không ổn định, vui lòng thử lại sau.';
+
+  @override
   String get completeProfile => 'Hoàn thiện hồ sơ';
 
   @override

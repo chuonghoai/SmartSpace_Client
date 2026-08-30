@@ -4,12 +4,12 @@ import 'package:smartspace_client/core/auth/refresh_token_service.dart';
 import 'package:smartspace_client/core/auth/user_storage_service.dart';
 import 'package:smartspace_client/core/constants/use_mock.dart';
 import 'package:smartspace_client/core/notification/firebase_service.dart';
-import 'package:smartspace_client/core/websocket/websocket_service.dart';
 import 'package:smartspace_client/features/auth/models/token_model.dart';
 import 'package:smartspace_client/features/auth/repositories/auth_repo.dart';
 import 'package:smartspace_client/features/auth/repositories/auth_repo_api.dart';
 import 'package:smartspace_client/features/auth/repositories/auth_repo_mock.dart';
 import 'package:smartspace_client/features/profile/models/user_model.dart';
+import 'package:smartspace_client/core/connection/connection_manager.dart';
 
 class AuthService {
   final AuthRepo authRepo;
@@ -33,11 +33,8 @@ class AuthService {
       await refreshTokenService.saveRefreshToken(data.refreshToken);
       await userStorageService.saveUser(data.userModel!);
 
-      // Kết nối WebSocket ngay sau khi lưu token
-      final wsConnected = await webSocketService.connect();
-      // Lấy FCM token và đăng ký
-      FirebaseService.getAndRegisterToken().ignore();
-      return (response: response, wsConnected: wsConnected);
+      // Kết nối WebSocket và FCM sẽ được xử lý ngầm trong LoginController
+      return (response: response, wsConnected: true);
     }
 
     return (response: response, wsConnected: false);
@@ -60,7 +57,7 @@ class AuthService {
       accessTokenService.clear();
       refreshTokenService.clear();
       userStorageService.clear();
-      webSocketService.disconnect();
+      connectionManager.stopAllAndCleanUp();
     }
   }
 

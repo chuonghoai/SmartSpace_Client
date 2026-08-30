@@ -40,6 +40,7 @@
   "enterPassword": "Enter password",
   "passwordRequired": "Password is required",
   "passwordsDoNotMatch": "Passwords do not match",
+  "connectionUnstable": "Service is currently unstable, please try again later.",
   "completeProfile": "Complete Profile",
   "fullname": "Full Name",
   "phone": "Phone Number",

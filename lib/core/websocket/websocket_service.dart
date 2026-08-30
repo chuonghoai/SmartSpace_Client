@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:stomp_dart_client/stomp_dart_client.dart';
 import 'package:smartspace_client/core/auth/access_token_service.dart';
 import 'package:smartspace_client/core/config/env_config.dart';
+import 'package:smartspace_client/core/connection/connection_state_provider.dart';
+import 'package:smartspace_client/core/exceptions/connection_exception.dart';
 
 enum WebSocketStatus { disconnected, connecting, connected, error }
 
@@ -114,12 +116,18 @@ class WebSocketService extends ChangeNotifier {
     required String destination,
     required void Function(StompFrame) callback,
   }) {
+    if (!connectionStateProvider.isReady()) {
+      throw ConnectionNotReadyException('connectionUnstable');
+    }
     if (!isConnected || _client == null) return null;
     return _client!.subscribe(destination: destination, callback: callback);
   }
 
   /// Gửi message qua STOMP
   void send({required String destination, required String body}) {
+    if (!connectionStateProvider.isReady()) {
+      throw ConnectionNotReadyException('connectionUnstable');
+    }
     if (!isConnected || _client == null) return;
     _client!.send(destination: destination, body: body);
   }

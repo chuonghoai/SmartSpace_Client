@@ -338,6 +338,12 @@ abstract class AppLocalizations {
   /// **'Passwords do not match'**
   String get passwordsDoNotMatch;
 
+  /// No description provided for @connectionUnstable.
+  ///
+  /// In en, this message translates to:
+  /// **'Service is currently unstable, please try again later.'**
+  String get connectionUnstable;
+
   /// No description provided for @completeProfile.
   ///
   /// In en, this message translates to:

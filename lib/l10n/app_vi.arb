@@ -40,6 +40,7 @@
   "enterPassword": "Nhập mật khẩu",
   "passwordRequired": "Vui lòng nhập mật khẩu",
   "passwordsDoNotMatch": "Mật khẩu không khớp",
+  "connectionUnstable": "Kết nối hiện không ổn định, vui lòng thử lại sau.",
   "completeProfile": "Hoàn thiện hồ sơ",
   "fullname": "Họ và tên",
   "phone": "Số điện thoại",
