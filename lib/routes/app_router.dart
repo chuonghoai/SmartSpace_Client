@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:smartspace_client/routes/router_path.dart';
 import 'package:smartspace_client/ui/responsive/screens/auth/login_screen.dart';
+import 'package:smartspace_client/ui/responsive/screens/settings/change_password_screen.dart';
 import 'package:smartspace_client/ui/responsive/screens/settings/settings_screen.dart';
 import 'package:smartspace_client/ui/shared/splash/splash_screen.dart';
 import 'package:smartspace_client/ui/responsive/screens/home/home_screen.dart';
@@ -53,6 +54,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: RouterPath.settings,
       builder: (context, state) => const SettingsScreen(),
+    ),
+    GoRoute(
+      path: RouterPath.changePassword,
+      builder: (context, state) => const ChangePasswordScreen(),
     ),
   ],
 );

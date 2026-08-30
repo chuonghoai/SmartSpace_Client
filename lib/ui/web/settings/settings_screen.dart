@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smartspace_client/l10n/app_localizations.dart';
+import 'package:smartspace_client/routes/router_path.dart';
 import 'package:smartspace_client/ui/mobile/settings/settings_controller.dart';
 import 'package:smartspace_client/ui/shared/image/app_network_image.dart';
 
@@ -67,6 +68,7 @@ class _WebSettingsScreenState extends State<WebSettingsScreen> {
                     theme: theme,
                     icon: Icons.password,
                     label: l10n.changePassword,
+                    onTap: () => context.push(RouterPath.changePassword),
                   ),
                   _buildItem(
                     theme: theme,

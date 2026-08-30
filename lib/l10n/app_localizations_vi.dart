@@ -364,4 +364,44 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get cancel => 'Hủy';
+
+  @override
+  String get changePasswordTitle => 'Đổi mật khẩu';
+
+  @override
+  String get currentPassword => 'Mật khẩu hiện tại';
+
+  @override
+  String get confirmNewPassword => 'Nhập lại mật khẩu mới';
+
+  @override
+  String get enterInfo => 'Nhập thông tin';
+
+  @override
+  String get confirm => 'Xác nhận';
+
+  @override
+  String get pleaseEnterCurrentPassword => 'Vui lòng nhập mật khẩu hiện tại';
+
+  @override
+  String get pleaseEnterNewPassword => 'Vui lòng nhập mật khẩu mới';
+
+  @override
+  String get passwordRequirementsNotMet => 'Mật khẩu không đáp ứng yêu cầu';
+
+  @override
+  String get changePasswordSuccess => 'Đổi mật khẩu thành công';
+
+  @override
+  String get changePasswordFailed => 'Đổi mật khẩu thất bại';
+
+  @override
+  String get passwordReqLength => 'Mật khẩu phải từ 8 đến 20 ký tự';
+
+  @override
+  String get passwordReqMixed => 'Bao gồm số, chữ viết hoa, chữ viết thường';
+
+  @override
+  String get passwordReqSpecial =>
+      'Bao gồm ít nhất một ký tự đặc biệt !@#\$^()_';
 }

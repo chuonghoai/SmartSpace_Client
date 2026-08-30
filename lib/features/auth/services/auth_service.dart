@@ -156,6 +156,19 @@ class AuthService {
       confirmPassword,
     );
   }
+
+  /// Change password
+  Future<ApiResponse<void>> changePassword(
+    String currentPassword,
+    String newPassword,
+    String confirmPassword,
+  ) async {
+    return await authRepo.changePassword(
+      currentPassword,
+      newPassword,
+      confirmPassword,
+    );
+  }
 }
 
 final authService = AuthService(
