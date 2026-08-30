@@ -310,4 +310,58 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get sessionExpired => 'Phiên đăng nhập hết hạn';
+
+  @override
+  String get settingsTitle => 'Cài đặt';
+
+  @override
+  String get accountSection => 'Tài khoản';
+
+  @override
+  String get shareHistory => 'Lịch sử chia sẻ';
+
+  @override
+  String get loginSettings => 'Cài đặt đăng nhập';
+
+  @override
+  String get changePassword => 'Đổi mật khẩu';
+
+  @override
+  String get manageDevices => 'Quản lý thiết bị';
+
+  @override
+  String get notificationSettings => 'Cài đặt thông báo';
+
+  @override
+  String get appSection => 'Ứng dụng';
+
+  @override
+  String get termsOfService => 'Điều khoản sử dụng';
+
+  @override
+  String get privacyPolicy => 'Chính sách quyền riêng tư';
+
+  @override
+  String get appVersion => 'Phiên bản ứng dụng';
+
+  @override
+  String get supportSection => 'Hỗ trợ';
+
+  @override
+  String get supportHotline => 'Hotline hỗ trợ';
+
+  @override
+  String get userGuide => 'Hướng dẫn sử dụng';
+
+  @override
+  String get faq => 'Câu hỏi thường gặp';
+
+  @override
+  String get logoutConfirmTitle => 'Đăng xuất';
+
+  @override
+  String get logoutConfirmMessage => 'Bạn có chắc chắn muốn đăng xuất?';
+
+  @override
+  String get cancel => 'Hủy';
 }
