@@ -225,9 +225,11 @@ class _WebLoginScreenState extends State<WebLoginScreen> {
               ),
               const SizedBox(height: 40),
               OutlinedButton.icon(
-                onPressed: () {
-                  // TODO: Implement Google Login
-                },
+                onPressed: _controller.isLoading
+                    ? null
+                    : () {
+                        _controller.loginWithGoogle(context);
+                      },
                 icon: const Icon(Icons.g_mobiledata, size: 28),
                 label: Text(l10n.googleLogin),
                 style: OutlinedButton.styleFrom(

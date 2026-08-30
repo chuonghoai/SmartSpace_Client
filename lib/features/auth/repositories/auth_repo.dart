@@ -9,6 +9,8 @@ abstract class AuthRepo {
     bool rememberMe,
   );
 
+  Future<ApiResponse<TokenModel>> loginGoogle(String idToken);
+
   // Step 1: Nhập email, nhận OTP
   Future<ApiResponse<void>> sendOtpRegister(String email);
   // Step 2: Nhập OTP

@@ -19,6 +19,15 @@ class AuthRepoApi implements AuthRepo {
   }
 
   @override
+  Future<ApiResponse<TokenModel>> loginGoogle(String idToken) async {
+    return await apiClient.post<TokenModel>(
+      '/auth/login/google',
+      data: {'idToken': idToken},
+      decoder: (json) => TokenModel.fromJson(json),
+    );
+  }
+
+  @override
   Future<ApiResponse<void>> logout() {
     return apiClient.post<void>('/auth/logout');
   }

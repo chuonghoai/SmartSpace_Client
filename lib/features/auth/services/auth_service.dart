@@ -40,6 +40,26 @@ class AuthService {
     return (response: response, wsConnected: false);
   }
 
+  Future<({ApiResponse<TokenModel> response, bool wsConnected})> loginGoogle(
+    String idToken,
+  ) async {
+    final response = await authRepo.loginGoogle(idToken);
+    final data = response.data;
+
+    if (response.success &&
+        data != null &&
+        data.accessToken.isNotEmpty &&
+        data.refreshToken.isNotEmpty) {
+      await accessTokenService.saveAccessToken(data.accessToken);
+      await refreshTokenService.saveRefreshToken(data.refreshToken);
+      await userStorageService.saveUser(data.userModel!);
+
+      return (response: response, wsConnected: true);
+    }
+
+    return (response: response, wsConnected: false);
+  }
+
   Future<ApiResponse<void>> logout() async {
     try {
       return await authRepo.logout();

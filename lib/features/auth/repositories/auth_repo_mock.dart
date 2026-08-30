@@ -34,6 +34,27 @@ class AuthRepoMock implements AuthRepo {
   }
 
   @override
+  Future<ApiResponse<TokenModel>> loginGoogle(String idToken) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return ApiResponse(
+      success: true,
+      message: 'Đăng nhập Google thành công',
+      data: TokenModel(
+        accessToken: 'abcdanfnjkasnflasjnlfnsfl',
+        refreshToken: 'rfjklanjfklanjslf',
+        registrationStatus: ERegistrationStatus.completed,
+        userModel: UserModel(
+          id: 'abcd',
+          email: 'trinhthy333@gmail.com',
+          fullname: 'Hong Hac Google',
+          avatarUrl: 'https://ui-avatars.com/api/?name=TH&format=png',
+          role: ERole.client,
+        ),
+      ),
+    );
+  }
+
+  @override
   Future<ApiResponse<void>> logout() async {
     await sharedPreferencesService.clear();
     await securedStorageService.clear();

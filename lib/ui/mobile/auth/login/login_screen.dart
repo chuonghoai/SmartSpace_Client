@@ -282,9 +282,11 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
 
                     // Sign in with Google
                     OutlinedButton.icon(
-                      onPressed: () {
-                        // TODO: Implement Google Login
-                      },
+                      onPressed: _controller.isLoading
+                          ? null
+                          : () {
+                              _controller.loginWithGoogle(context);
+                            },
                       icon: const Icon(Icons.g_mobiledata, size: 28),
                       label: Text(l10n.googleLogin),
                       style: OutlinedButton.styleFrom(
