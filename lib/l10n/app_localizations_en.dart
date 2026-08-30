@@ -360,4 +360,45 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cancel => 'Cancel';
+
+  @override
+  String get changePasswordTitle => 'Change Password';
+
+  @override
+  String get currentPassword => 'Current Password';
+
+  @override
+  String get confirmNewPassword => 'Confirm New Password';
+
+  @override
+  String get enterInfo => 'Enter information';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get pleaseEnterCurrentPassword => 'Please enter current password';
+
+  @override
+  String get pleaseEnterNewPassword => 'Please enter new password';
+
+  @override
+  String get passwordRequirementsNotMet =>
+      'Password does not meet requirements';
+
+  @override
+  String get changePasswordSuccess => 'Password changed successfully';
+
+  @override
+  String get changePasswordFailed => 'Failed to change password';
+
+  @override
+  String get passwordReqLength => 'Password must be 8-20 characters';
+
+  @override
+  String get passwordReqMixed => 'Include numbers, uppercase, lowercase';
+
+  @override
+  String get passwordReqSpecial =>
+      'Include at least one special character !@#\$^()_';
 }

@@ -146,4 +146,19 @@ class AuthRepoMock implements AuthRepo {
       data: null,
     );
   }
+
+  // Change password
+  @override
+  Future<ApiResponse<void>> changePassword(
+    String currentPassword,
+    String newPassword,
+    String confirmPassword,
+  ) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return ApiResponse(
+      success: true,
+      message: 'Đổi mật khẩu thành công',
+      data: null,
+    );
+  }
 }

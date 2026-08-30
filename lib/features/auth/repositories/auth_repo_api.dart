@@ -109,4 +109,21 @@ class AuthRepoApi implements AuthRepo {
       },
     );
   }
+
+  // Đổi mật khẩu
+  @override
+  Future<ApiResponse<void>> changePassword(
+    String currentPassword,
+    String newPassword,
+    String confirmPassword,
+  ) async {
+    return await apiClient.put<void>(
+      '/auth/change-password',
+      data: {
+        'currentPassword': currentPassword,
+        'newPassword': newPassword,
+        'confirmPassword': confirmPassword,
+      },
+    );
+  }
 }

@@ -37,4 +37,10 @@ abstract class AuthRepo {
     String newPassword,
     String confirmPassword,
   );
+  // Đổi mật khẩu
+  Future<ApiResponse<void>> changePassword(
+    String currentPassword,
+    String newPassword,
+    String confirmPassword,
+  );
 }

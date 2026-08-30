@@ -127,5 +127,19 @@
   "faq": "FAQ",
   "logoutConfirmTitle": "Log out",
   "logoutConfirmMessage": "Are you sure you want to log out?",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+
+  "changePasswordTitle": "Change Password",
+  "currentPassword": "Current Password",
+  "confirmNewPassword": "Confirm New Password",
+  "enterInfo": "Enter information",
+  "confirm": "Confirm",
+  "pleaseEnterCurrentPassword": "Please enter current password",
+  "pleaseEnterNewPassword": "Please enter new password",
+  "passwordRequirementsNotMet": "Password does not meet requirements",
+  "changePasswordSuccess": "Password changed successfully",
+  "changePasswordFailed": "Failed to change password",
+  "passwordReqLength": "Password must be 8-20 characters",
+  "passwordReqMixed": "Include numbers, uppercase, lowercase",
+  "passwordReqSpecial": "Include at least one special character !@#$^()_"
 }

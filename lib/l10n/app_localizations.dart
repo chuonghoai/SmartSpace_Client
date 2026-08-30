@@ -799,6 +799,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get cancel;
+
+  /// No description provided for @changePasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get changePasswordTitle;
+
+  /// No description provided for @currentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Password'**
+  String get currentPassword;
+
+  /// No description provided for @confirmNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm New Password'**
+  String get confirmNewPassword;
+
+  /// No description provided for @enterInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter information'**
+  String get enterInfo;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @pleaseEnterCurrentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter current password'**
+  String get pleaseEnterCurrentPassword;
+
+  /// No description provided for @pleaseEnterNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter new password'**
+  String get pleaseEnterNewPassword;
+
+  /// No description provided for @passwordRequirementsNotMet.
+  ///
+  /// In en, this message translates to:
+  /// **'Password does not meet requirements'**
+  String get passwordRequirementsNotMet;
+
+  /// No description provided for @changePasswordSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Password changed successfully'**
+  String get changePasswordSuccess;
+
+  /// No description provided for @changePasswordFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to change password'**
+  String get changePasswordFailed;
+
+  /// No description provided for @passwordReqLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be 8-20 characters'**
+  String get passwordReqLength;
+
+  /// No description provided for @passwordReqMixed.
+  ///
+  /// In en, this message translates to:
+  /// **'Include numbers, uppercase, lowercase'**
+  String get passwordReqMixed;
+
+  /// No description provided for @passwordReqSpecial.
+  ///
+  /// In en, this message translates to:
+  /// **'Include at least one special character !@#\$^()_'**
+  String get passwordReqSpecial;
 }
 
 class _AppLocalizationsDelegate

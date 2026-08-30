@@ -127,5 +127,19 @@
   "faq": "Câu hỏi thường gặp",
   "logoutConfirmTitle": "Đăng xuất",
   "logoutConfirmMessage": "Bạn có chắc chắn muốn đăng xuất?",
-  "cancel": "Hủy"
+  "cancel": "Hủy",
+
+  "changePasswordTitle": "Đổi mật khẩu",
+  "currentPassword": "Mật khẩu hiện tại",
+  "confirmNewPassword": "Nhập lại mật khẩu mới",
+  "enterInfo": "Nhập thông tin",
+  "confirm": "Xác nhận",
+  "pleaseEnterCurrentPassword": "Vui lòng nhập mật khẩu hiện tại",
+  "pleaseEnterNewPassword": "Vui lòng nhập mật khẩu mới",
+  "passwordRequirementsNotMet": "Mật khẩu không đáp ứng yêu cầu",
+  "changePasswordSuccess": "Đổi mật khẩu thành công",
+  "changePasswordFailed": "Đổi mật khẩu thất bại",
+  "passwordReqLength": "Mật khẩu phải từ 8 đến 20 ký tự",
+  "passwordReqMixed": "Bao gồm số, chữ viết hoa, chữ viết thường",
+  "passwordReqSpecial": "Bao gồm ít nhất một ký tự đặc biệt !@#$^()_"
 }
