@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smartspace_client/core/constants/registration_status.dart';
 import 'package:smartspace_client/features/auth/services/auth_service.dart';
@@ -82,7 +83,8 @@ class LoginController extends ChangeNotifier {
     try {
       if (!_isGoogleInitialized) {
         await google_sign_in_pkg.GoogleSignIn.instance.initialize(
-          clientId: EnvConfig.googleClientId,
+          clientId: kIsWeb ? EnvConfig.googleClientId : null,
+          serverClientId: EnvConfig.googleClientId,
         );
         _isGoogleInitialized = true;
       }
